@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Recon - Real-Time Observability for AI Coding Agents</title>
+  <meta name="description" content="Agent Recon is a real-time observability dashboard for AI coding agents. Monitor tool calls, security events, token usage, and session activity live.">
+  <link rel="canonical" href="https://agent-recon.net">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2129;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --green: #3fb950;
+      --yellow: #d29922;
+      --blue: #58a6ff;
+      --red: #f85149;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+    }
+
+    /* ── Nav ────────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── Hero ───────────────────────────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero h1 .highlight { color: var(--accent-light); }
+    .hero .subtitle {
+      font-size: 20px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.2s;
+    }
+    .btn:hover { transform: translateY(-1px); text-decoration: none; }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent-light); }
+    .install-cmd {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 10px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 15px;
+      color: var(--green);
+      user-select: all;
+    }
+
+    /* ── Sections ──────────────────────────────────────────────────────── */
+    section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+    section h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    section .section-sub {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 48px;
+      font-size: 17px;
+    }
+
+    /* ── Features ──────────────────────────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+    }
+    .feature-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .feature-card .icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .feature-card p { color: var(--muted); font-size: 14px; }
+
+    /* ── Pricing ──────────────────────────────────────────────────────── */
+    .billing-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+      align-items: center;
+    }
+    .billing-toggle span { color: var(--muted); font-size: 14px; }
+    .billing-toggle .active { color: var(--text); font-weight: 600; }
+    .toggle-track {
+      width: 44px;
+      height: 24px;
+      background: var(--border);
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle-track.on { background: var(--accent); }
+    .toggle-knob {
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: left 0.2s;
+    }
+    .toggle-track.on .toggle-knob { left: 22px; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      position: relative;
+    }
+    .price-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 24px rgba(124, 58, 237, 0.15);
+    }
+    .price-card .badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .price-card h3 {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+    .price-card .price {
+      font-size: 36px;
+      font-weight: 800;
+      margin: 12px 0 4px;
+    }
+    .price-card .price .period { font-size: 16px; font-weight: 400; color: var(--muted); }
+    .price-card .price-annual { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .price-card .desc { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .price-card ul {
+      list-style: none;
+      margin-bottom: 24px;
+    }
+    .price-card ul li {
+      padding: 6px 0;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .price-card ul li::before {
+      content: "\2713";
+      color: var(--green);
+      margin-right: 10px;
+      font-weight: 700;
+    }
+    .price-card ul li.unavailable {
+      color: var(--muted);
+    }
+    .price-card ul li.unavailable::before {
+      content: "\2717";
+      color: var(--muted);
+    }
+    .price-card .btn { width: 100%; justify-content: center; }
+
+    /* ── FAQ ───────────────────────────────────────────────────────────── */
+    .faq-list { max-width: 700px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .faq-item summary {
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::before {
+      content: "+";
+      display: inline-block;
+      width: 20px;
+      color: var(--accent-light);
+      font-weight: 700;
+    }
+    .faq-item[open] summary::before { content: "\2212"; }
+    .faq-item p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      padding-left: 20px;
+    }
+
+    /* ── Footer ────────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-links a { color: var(--muted); }
+    footer .footer-links a:hover { color: var(--text); }
+    .disclaimer {
+      max-width: 600px;
+      margin: 16px auto 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      .hero .subtitle { font-size: 17px; }
+      section { padding: 48px 16px; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-brand">Agent <span>Recon</span></div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/pnwgreatloopllc/agent-recon" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Real-time observability for <span class="highlight">AI coding agents</span></h1>
+    <p class="subtitle">
+      Monitor every tool call, security event, token cost, and session in real time.
+      Know exactly what your AI agent is doing.
+    </p>
+    <div class="hero-cta">
+      <a href="#pricing" class="btn btn-primary">Get Started</a>
+      <a href="https://github.com/pnwgreatloopllc/agent-recon" class="btn btn-secondary" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+    <div class="install-cmd">npm install -g agent-recon</div>
+  </div>
+
+  <!-- Features -->
+  <section id="features">
+    <h2>Everything you need to observe your AI agent</h2>
+    <p class="section-sub">
+      Agent Recon captures every lifecycle event from your AI coding agent and
+      presents it in a live dashboard.
+    </p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="icon">&#x1F4E1;</span>
+        <h3>Real-Time Event Feed</h3>
+        <p>Every tool call, prompt, and completion streams live to your browser via WebSocket. Filter by category, session, or environment.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">&#x1F6E1;&#xFE0F;</span>
+        <h3>Security Classification</h3>
+        <p>Automatic risk classification for Bash commands, file writes, and network calls. LLM-powered chain analysis connects related events into attack narratives.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">&#x1F4B0;</span>
+        <h3>Token Cost Tracking</h3>
+        <p>Per-session and cumulative token usage with real-time cost estimates. Supports all Claude, GPT, and Gemini model pricing.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">&#x1F50D;</span>
+        <h3>Per-Session Insights</h3>
+        <p>LLM-generated summaries and recommendations for each coding session. Understand patterns, spot inefficiencies, and improve your workflow.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">&#x1F30D;</span>
+        <h3>Cross-Platform</h3>
+        <p>Works on Windows, macOS, Linux, and WSL. Hook scripts detect your environment automatically. One-command install on any platform.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">&#x1F4CA;</span>
+        <h3>Environment Recommendations</h3>
+        <p>7-day rolling analysis of your development environment with actionable recommendations to optimize your agent workflow.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <h2>Simple, transparent pricing</h2>
+    <p class="section-sub">
+      Community tier is free forever. Upgrade for LLM-powered analysis features.
+      You supply your own API keys &mdash; zero marginal cost to us.
+    </p>
+
+    <div class="billing-toggle">
+      <span id="monthlyLabel">Monthly</span>
+      <div class="toggle-track on" id="billingToggle" role="switch" aria-checked="true" tabindex="0">
+        <div class="toggle-knob"></div>
+      </div>
+      <span id="annualLabel" class="active">Annual <span style="color:var(--green);font-size:12px">(save up to 30%)</span></span>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Community -->
+      <div class="price-card">
+        <h3>Community</h3>
+        <div class="desc">For individual developers evaluating or using for personal projects.</div>
+        <div class="price">Free <span class="period">forever</span></div>
+        <div class="price-annual">&nbsp;</div>
+        <ul>
+          <li>Real-time event feed</li>
+          <li>Token cost tracking</li>
+          <li>Regex security classification</li>
+          <li>7-day data retention</li>
+          <li>Single environment</li>
+          <li class="unavailable">LLM security chain analysis</li>
+          <li class="unavailable">AI insights &amp; recommendations</li>
+          <li class="unavailable">OTEL export, TLS, archives</li>
+        </ul>
+        <a href="#install" class="btn btn-secondary">Install Free</a>
+      </div>
+
+      <!-- Personal -->
+      <div class="price-card featured">
+        <div class="badge">Most Popular</div>
+        <h3>Personal</h3>
+        <div class="desc">Full-featured for individual developers. Purchase with personal funds.</div>
+        <div class="price" data-monthly="$9.99" data-annual="$7.00">$7.00 <span class="period">/month</span></div>
+        <div class="price-annual" data-monthly="billed monthly" data-annual="$84/year (save 30%)">$84/year (save 30%)</div>
+        <ul>
+          <li>Everything in Community</li>
+          <li>LLM security chain analysis</li>
+          <li>Per-session AI insights</li>
+          <li>Prompt quality coaching</li>
+          <li>Environment recommendations</li>
+          <li>Session history narratives</li>
+          <li>90-day configurable retention</li>
+          <li>OTEL export, TLS, encrypted archives</li>
+        </ul>
+        <a href="https://agentrecon.lemonsqueezy.com/checkout/buy/fee0d61f-3dc9-434f-b152-c291d7a20a30" class="btn btn-primary" id="personalCheckout" data-monthly="https://agentrecon.lemonsqueezy.com/checkout/buy/fb5d9d39-5fd0-4e81-9b2f-d4ee81b9cd7b" data-annual="https://agentrecon.lemonsqueezy.com/checkout/buy/fee0d61f-3dc9-434f-b152-c291d7a20a30">Subscribe</a>
+      </div>
+
+      <!-- Professional -->
+      <div class="price-card">
+        <h3>Professional</h3>
+        <div class="desc">For developers in a company context. Includes invoice billing.</div>
+        <div class="price" data-monthly="$29.99" data-annual="$23.25">$23.25 <span class="period">/month</span></div>
+        <div class="price-annual" data-monthly="billed monthly" data-annual="$279/year (save 20%)">$279/year (save 20%)</div>
+        <ul>
+          <li>Everything in Personal</li>
+          <li>Use in employment context</li>
+          <li>Invoice billing available</li>
+          <li>Priority support</li>
+          <li>Multi-environment support</li>
+          <li>Same features, different terms</li>
+        </ul>
+        <a href="https://agentrecon.lemonsqueezy.com/checkout/buy/2f1c7a09-f5b9-4c82-9843-59f47bef37c2" class="btn btn-secondary" id="professionalCheckout" data-monthly="https://agentrecon.lemonsqueezy.com/checkout/buy/437f5c88-95ff-4abc-b9ed-4d08d4c4c506" data-annual="https://agentrecon.lemonsqueezy.com/checkout/buy/2f1c7a09-f5b9-4c82-9843-59f47bef37c2">Subscribe</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2>Frequently asked questions</h2>
+    <p class="section-sub">Quick answers to common questions.</p>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Which AI coding agents does Agent Recon support?</summary>
+        <p>v1 ships with full support for Claude Code. The architecture includes an agent abstraction layer designed for multi-agent support. Cursor, GitHub Copilot, and Windsurf are planned for v1.1.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need to provide my own API keys?</summary>
+        <p>Yes. LLM-powered features (security chain analysis, insights, prompt coaching) require your own API key for the LLM provider of your choice (Anthropic, OpenAI, or Google). Agent Recon orchestrates the analysis &mdash; you pay the LLM provider directly for inference.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What data does Agent Recon collect?</summary>
+        <p>All event data stays on your local machine in a SQLite database. An optional, opt-in telemetry heartbeat sends version, platform, and a random install ID to help us understand adoption. No code, prompts, or personal data is ever transmitted. See our <a href="https://github.com/pnwgreatloopllc/agent-recon/blob/main/PRIVACY.md">Privacy Policy</a>.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What's the difference between Personal and Professional?</summary>
+        <p>Same features. Different legal terms. Personal must be purchased with your own funds. Professional is for employer-reimbursed use and includes invoice billing and priority support. This follows the JetBrains licensing model.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I use Agent Recon with Cursor or other AI agents?</summary>
+        <p>Not yet in v1, but the architecture is designed for it. Cursor, GitHub Copilot, and Windsurf integrations are on the v1.1 roadmap. Each requires only a hook forwarder script and event mapping &mdash; the core dashboard and analysis pipelines are agent-agnostic.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How many devices can I activate with one license?</summary>
+        <p>Each license key supports up to 3 simultaneous device activations. You can deactivate a device from the Agent Recon settings panel to free up a slot.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is there a free trial?</summary>
+        <p>The Community tier is free forever with full real-time monitoring, token tracking, and regex-based security classification. LLM-powered features are visible in the UI but require a paid license to activate. Try the free tier first &mdash; upgrade when you want the intelligence layer.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I cancel my subscription?</summary>
+        <p>You can cancel anytime through the Lemonsqueezy customer portal. Your license remains active until the end of the current billing period.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Install -->
+  <section id="install">
+    <h2>Get started in 60 seconds</h2>
+    <p class="section-sub">One command installs Agent Recon and configures your hooks.</p>
+    <div style="text-align:center">
+      <div class="install-cmd" style="font-size:18px;margin-bottom:16px">npm install -g agent-recon</div>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:8px">
+        Then run the guided installer:
+      </p>
+      <div class="install-cmd">agent-recon install</div>
+      <p style="color:var(--muted);font-size:14px;margin-top:24px">
+        Requires Node.js 18+ and Python 3. Supports Windows, macOS, Linux, and WSL.
+      </p>
+      <p style="color:var(--muted);font-size:14px;margin-top:8px">
+        See the full <a href="https://github.com/pnwgreatloopllc/agent-recon/blob/main/INSTALL.md">installation guide</a> for platform-specific instructions.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="https://github.com/pnwgreatloopllc/agent-recon">GitHub</a>
+      <a href="https://github.com/pnwgreatloopllc/agent-recon/blob/main/PRIVACY.md">Privacy Policy</a>
+      <a href="https://github.com/pnwgreatloopllc/agent-recon/blob/main/TERMS.md">Terms of Service</a>
+      <a href="https://github.com/pnwgreatloopllc/agent-recon/blob/main/EULA.md">EULA</a>
+      <a href="https://github.com/pnwgreatloopllc/agent-recon/blob/main/LICENSE">License</a>
+    </div>
+    <p>&copy; 2026 PNW Great Loop LLC. All rights reserved.</p>
+    <p>Agent Recon&trade; is a trademark of PNW Great Loop LLC.</p>
+    <div class="disclaimer">
+      Agent Recon is an independent product and is not affiliated with, endorsed by, or
+      sponsored by Anthropic, PBC. "Claude" and "Claude Code" are trademarks of Anthropic.
+      All other trademarks are the property of their respective owners.
+    </div>
+  </footer>
+
+  <script>
+    // Billing toggle (annual ↔ monthly)
+    const toggle = document.getElementById('billingToggle');
+    const monthlyLabel = document.getElementById('monthlyLabel');
+    const annualLabel = document.getElementById('annualLabel');
+    let isAnnual = true;
+
+    function updatePricing() {
+      const mode = isAnnual ? 'annual' : 'monthly';
+      toggle.classList.toggle('on', isAnnual);
+      monthlyLabel.classList.toggle('active', !isAnnual);
+      annualLabel.classList.toggle('active', isAnnual);
+      document.querySelectorAll('.price[data-monthly]').forEach(el => {
+        el.innerHTML = el.getAttribute('data-' + mode) + ' <span class="period">/month</span>';
+      });
+      document.querySelectorAll('.price-annual[data-monthly]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + mode);
+      });
+      document.querySelectorAll('a[data-monthly][data-annual]').forEach(el => {
+        el.href = el.getAttribute('data-' + mode);
+      });
+    }
+
+    toggle.addEventListener('click', () => { isAnnual = !isAnnual; updatePricing(); });
+    toggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); isAnnual = !isAnnual; updatePricing(); }
+    });
+  </script>
+
+</body>
+</html>
