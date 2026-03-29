@@ -297,6 +297,38 @@
       padding-left: 20px;
     }
 
+    /* ── Docs Grid ─────────────────────────────────────────────────────── */
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .docs-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      display: block;
+      color: inherit;
+    }
+    .docs-card:hover {
+      border-color: var(--accent-light);
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.12);
+      text-decoration: none;
+    }
+    .docs-card .icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .docs-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .docs-card p { color: var(--muted); font-size: 14px; }
+
     /* ── Footer ────────────────────────────────────────────────────────── */
     footer {
       border-top: 1px solid var(--border);
@@ -341,6 +373,7 @@
       <a href="#features">Features</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
+      <a href="#docs">Docs</a>
       <a href="#install">Install</a>
       <a href="https://github.com/genxcoder1999/agent-recon" target="_blank" rel="noopener">GitHub</a>
     </div>
@@ -513,6 +546,44 @@
         <summary>How do I cancel my subscription?</summary>
         <p>You can cancel anytime through the Lemonsqueezy customer portal. Your license remains active until the end of the current billing period.</p>
       </details>
+    </div>
+  </section>
+
+  <!-- Docs -->
+  <section id="docs">
+    <h2>Documentation</h2>
+    <p class="section-sub">Everything you need to get started and go deep.</p>
+    <div class="docs-grid">
+      <a class="docs-card" href="https://github.com/genxcoder1999/agent-recon/blob/main/README.md" target="_blank" rel="noopener">
+        <span class="icon">&#x1F680;</span>
+        <h3>Quick Start</h3>
+        <p>Install, configure, and see your first events in under 60 seconds.</p>
+      </a>
+      <a class="docs-card" href="https://github.com/genxcoder1999/agent-recon/blob/main/INSTALL.md" target="_blank" rel="noopener">
+        <span class="icon">&#x1F4E6;</span>
+        <h3>Installation Guide</h3>
+        <p>Platform-specific setup for Windows, macOS, Linux, and WSL.</p>
+      </a>
+      <a class="docs-card" href="https://github.com/genxcoder1999/agent-recon/blob/main/docs/API.md" target="_blank" rel="noopener">
+        <span class="icon">&#x1F4E1;</span>
+        <h3>API Reference</h3>
+        <p>47 HTTP endpoints and 11 WebSocket message types, fully documented.</p>
+      </a>
+      <a class="docs-card" href="https://github.com/genxcoder1999/agent-recon/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noopener">
+        <span class="icon">&#x1F3D7;&#xFE0F;</span>
+        <h3>Architecture</h3>
+        <p>System design, event pipeline, and module-by-module reference.</p>
+      </a>
+      <a class="docs-card" href="https://github.com/genxcoder1999/agent-recon/blob/main/docs/DATABASE.md" target="_blank" rel="noopener">
+        <span class="icon">&#x1F5C4;&#xFE0F;</span>
+        <h3>Database Schema</h3>
+        <p>9 tables, 86 functions, 33 migrations — the complete data layer.</p>
+      </a>
+      <a class="docs-card" href="https://github.com/genxcoder1999/agent-recon/blob/main/docs/TROUBLESHOOTING.md" target="_blank" rel="noopener">
+        <span class="icon">&#x1F527;</span>
+        <h3>Troubleshooting</h3>
+        <p>Common issues and solutions for users and developers.</p>
+      </a>
     </div>
   </section>
 
