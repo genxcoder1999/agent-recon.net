@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Agent Recon&trade;</title>
+  <meta name="description" content="Privacy Policy for Agent Recon. Learn what minimal telemetry data we collect, how we use it, your GDPR and CCPA rights, and how to opt out or delete your data.">
+  <link rel="canonical" href="https://www.agent-recon.net/privacy.html">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2129;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── Legal Content ────────────────────────────────────────────────── */
+    .legal-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .legal-content h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .legal-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .legal-content h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-content h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    .legal-content p {
+      margin-bottom: 12px;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .legal-content ul, .legal-content ol {
+      margin: 8px 0 16px 24px;
+      font-size: 15px;
+    }
+    .legal-content li {
+      margin-bottom: 4px;
+    }
+    .legal-content blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      margin: 16px 0;
+      background: var(--surface);
+      border-radius: 0 8px 8px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .legal-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-links a { color: var(--muted); }
+    footer .footer-links a:hover { color: var(--text); }
+    .disclaimer {
+      max-width: 600px;
+      margin: 16px auto 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .legal-content { padding: 32px 16px 60px; }
+      .legal-content h1 { font-size: 26px; }
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-brand">Agent <span>Recon</span>&trade;</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="https://github.com/genxcoder1999/agent-recon" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="legal-content">
+    <h1>Privacy Policy</h1>
+    <div class="legal-meta">
+      <strong>Effective Date:</strong> March 24, 2026
+    </div>
+
+    <p>Agent Recon&trade; respects your privacy. This policy explains what data we collect, how we use it, and your rights.</p>
+
+    <hr>
+
+    <h2 id="1-what-we-collect">1. What We Collect</h2>
+    <p>
+      When telemetry is enabled, Agent Recon sends a single heartbeat on startup and once daily.
+      Each heartbeat contains the following fields:
+    </p>
+    <ul>
+      <li><strong><code>install_id</code></strong> &mdash; a randomly generated UUID, not derived from any personal information (not from hardware IDs, MAC addresses, usernames, or hostnames)</li>
+      <li><strong><code>version</code></strong> &mdash; the Agent Recon version string (e.g., <code>"1.5.0"</code>)</li>
+      <li><strong><code>platform</code></strong> &mdash; operating system and CPU architecture (e.g., <code>"darwin-arm64"</code>)</li>
+      <li><strong><code>timestamp</code></strong> &mdash; ISO-8601 datetime of the heartbeat</li>
+    </ul>
+    <p>
+      Additionally, your source IP address is captured server-side by the Azure infrastructure
+      when the heartbeat is received. The client never sends IP information.
+    </p>
+
+    <h2 id="2-what-we-do-not-collect">2. What We Do NOT Collect</h2>
+    <p>Agent Recon does <strong>not</strong> collect any of the following:</p>
+    <ul>
+      <li>No session content (prompts, tool inputs, tool outputs, file contents, code)</li>
+      <li>No personally identifiable information (names, email addresses, usernames, hostnames)</li>
+      <li>No API keys, credentials, or authentication tokens</li>
+      <li>No usage metrics (token counts, session durations, event counts, model names)</li>
+      <li>No file paths, working directories, or project names</li>
+      <li>No browsing history or network activity</li>
+      <li>No hardware identifiers (MAC addresses, serial numbers, device IDs)</li>
+    </ul>
+
+    <h2 id="3-how-we-use-collected-data">3. How We Use Collected Data</h2>
+    <p>We use the data described in Section 1 for the following purposes:</p>
+    <ul>
+      <li><strong>Aggregate install counts</strong> &mdash; measuring daily active installs</li>
+      <li><strong>Version distribution analysis</strong> &mdash; prioritizing updates and deprecation schedules</li>
+      <li><strong>Platform distribution analysis</strong> &mdash; prioritizing platform support and compatibility testing</li>
+      <li><strong>IP-to-ASN mapping</strong> &mdash; identifying corporate network clusters for license compliance</li>
+    </ul>
+    <p>
+      We do <strong>not</strong> sell, rent, or share your data with third parties.
+      We do <strong>not</strong> use your data for advertising or profiling.
+    </p>
+
+    <h2 id="4-data-retention">4. Data Retention</h2>
+    <ul>
+      <li>Heartbeat records are retained for <strong>90 days</strong>, then permanently deleted.</li>
+      <li>IP-to-ASN mapping data is retained for <strong>90 days</strong>.</li>
+      <li>After the retention period, data is purged and cannot be recovered.</li>
+    </ul>
+
+    <h2 id="5-how-to-opt-out">5. How to Opt Out</h2>
+    <p>You can disable telemetry at any time:</p>
+    <ol>
+      <li>Open the Agent Recon dashboard in your browser.</li>
+      <li>Click the gear icon to open <strong>Settings</strong>.</li>
+      <li>Toggle <strong>&ldquo;Send anonymous usage statistics&rdquo;</strong> to disabled.</li>
+    </ol>
+    <p>
+      When disabled, zero telemetry is sent &mdash; no heartbeat, no version check, nothing.
+      The opt-out takes effect immediately.
+    </p>
+    <p>
+      You can also set <code>telemetry_enabled</code> to <code>false</code> directly in the
+      SQLite database settings table.
+    </p>
+
+    <h2 id="6-how-to-delete-your-data">6. How to Delete Your Data</h2>
+    <p>Self-service data deletion is built into the dashboard:</p>
+    <ol>
+      <li>Open the Agent Recon dashboard in your browser.</li>
+      <li>Click the gear icon to open <strong>Settings</strong>.</li>
+      <li>Click <strong>&ldquo;Delete My Data&rdquo;</strong> in the telemetry section.</li>
+      <li>Confirm when prompted.</li>
+    </ol>
+    <p>
+      Deletion is <strong>immediate and permanent</strong> &mdash; deleted data cannot be recovered.
+      Telemetry is automatically disabled after deletion to prevent new records from being created.
+    </p>
+
+    <h2 id="7-your-rights-under-gdpr">7. Your Rights Under GDPR</h2>
+    <p>If you are in the European Economic Area, you have the right to:</p>
+    <ul>
+      <li><strong>Access</strong> &mdash; request what data we hold about your install ID</li>
+      <li><strong>Erasure</strong> &mdash; delete all data associated with your install ID (see Section 6)</li>
+      <li><strong>Object</strong> &mdash; opt out of data collection at any time (see Section 5)</li>
+      <li><strong>Portability</strong> &mdash; request your data in a machine-readable format via GitHub Issues</li>
+      <li><strong>Rectification</strong> &mdash; your data consists only of automatically generated fields; there is nothing to correct</li>
+    </ul>
+    <p>To exercise these rights, use the self-service deletion endpoint (Section 6) or open a GitHub Issue.</p>
+
+    <h2 id="8-your-rights-under-ccpa">8. Your Rights Under CCPA</h2>
+    <p>If you are a California resident:</p>
+    <ul>
+      <li><strong>Right to Know</strong> &mdash; you can request what data we collect (described in Section 1)</li>
+      <li><strong>Right to Delete</strong> &mdash; use the self-service deletion endpoint (Section 6)</li>
+      <li><strong>Right to Opt Out of Sale</strong> &mdash; we do not sell your personal information to any third party</li>
+      <li><strong>Non-Discrimination</strong> &mdash; we will not discriminate against you for exercising your rights</li>
+    </ul>
+
+    <h2 id="9-data-security">9. Data Security</h2>
+    <ul>
+      <li>All heartbeat data is transmitted over <strong>HTTPS</strong> (TLS encryption in transit).</li>
+      <li>Server-side data is stored in <strong>Azure Table Storage</strong> with managed identity access controls.</li>
+      <li>Secrets (API tokens) are stored in <strong>Azure Key Vault</strong>.</li>
+      <li>Network access to storage and key vault is restricted via <strong>Azure Virtual Network</strong> and firewall rules.</li>
+      <li>No shared access keys &mdash; all access uses <strong>Azure Managed Identity</strong> with role-based access control (RBAC).</li>
+    </ul>
+
+    <h2 id="10-childrens-privacy">10. Children&rsquo;s Privacy</h2>
+    <p>
+      Agent Recon is a software development tool not directed at children under 13.
+      We do not knowingly collect data from children.
+    </p>
+
+    <h2 id="11-contact">11. Contact</h2>
+    <p>For privacy questions or requests, open a GitHub Issue at:</p>
+    <p>
+      <a href="https://github.com/genxcoder1999/agent-recon/issues">https://github.com/genxcoder1999/agent-recon/issues</a>
+    </p>
+
+    <h2 id="12-changes-to-this-policy">12. Changes to This Policy</h2>
+    <p>
+      We may update this policy from time to time. Material changes will be noted in release notes
+      and the effective date will be updated. Continued use of Agent Recon after changes constitutes
+      acceptance of the revised policy.
+    </p>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="eula.html">EULA</a>
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE">License</a>
+    </div>
+    <p>&copy; 2026 PNW Great Loop LLC. All rights reserved.</p>
+    <p>Agent Recon&trade; is a trademark of PNW Great Loop LLC.</p>
+    <div class="disclaimer">
+      Agent Recon is an independent product and is not affiliated with, endorsed by, or
+      sponsored by Anthropic, PBC. &ldquo;Claude&rdquo; and &ldquo;Claude Code&rdquo; are trademarks of Anthropic.
+      All other trademarks are the property of their respective owners.
+    </div>
+  </footer>
+
+</body>
+</html>

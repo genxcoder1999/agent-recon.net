@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>End User License Agreement - Agent Recon&trade;</title>
+  <meta name="description" content="End User License Agreement (EULA) for Agent Recon. Covers license tiers (Community, Personal, Professional), permitted use, restrictions, and intellectual property.">
+  <link rel="canonical" href="https://www.agent-recon.net/eula.html">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2129;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── Legal Content ────────────────────────────────────────────────── */
+    .legal-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .legal-content h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .legal-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .legal-content h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-content h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    .legal-content p {
+      margin-bottom: 12px;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .legal-content ul, .legal-content ol {
+      margin: 8px 0 16px 24px;
+      font-size: 15px;
+    }
+    .legal-content li {
+      margin-bottom: 4px;
+    }
+    .legal-content blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      margin: 16px 0;
+      background: var(--surface);
+      border-radius: 0 8px 8px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .legal-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+    .legal-content .caps {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-links a { color: var(--muted); }
+    footer .footer-links a:hover { color: var(--text); }
+    .disclaimer {
+      max-width: 600px;
+      margin: 16px auto 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .legal-content { padding: 32px 16px 60px; }
+      .legal-content h1 { font-size: 26px; }
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-brand">Agent <span>Recon</span>&trade;</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="https://github.com/genxcoder1999/agent-recon" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="legal-content">
+    <h1>End User License Agreement (EULA)</h1>
+    <div class="legal-meta">
+      <strong>Effective Date:</strong> March 2026 &middot;
+      <strong>Licensor:</strong> PNW Great Loop LLC &middot;
+      <strong>Product:</strong> Agent Recon&trade;
+    </div>
+
+    <blockquote>
+      Agent Recon&trade; is an independent product and is not affiliated with, endorsed
+      by, or sponsored by Anthropic PBC. Claude, Claude Code, and the Anthropic
+      name and logo are trademarks of Anthropic PBC. Agent Recon&trade; is a trademark
+      of PNW Great Loop LLC.
+    </blockquote>
+
+    <h2 id="1-agreement-to-terms">1. Agreement to Terms</h2>
+    <p>
+      By installing, copying, or otherwise using Agent Recon&trade; (&ldquo;Software&rdquo;), you
+      (&ldquo;User&rdquo;) agree to be bound by the terms of this End User License Agreement
+      (&ldquo;EULA&rdquo;). If you do not agree, do not install or use the Software.
+    </p>
+    <p>
+      This EULA governs the entire Agent Recon&trade; distribution, which includes both
+      open-source core components (licensed under
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE">Apache License 2.0</a>)
+      and proprietary components (licensed under a
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE-COMMERCIAL">commercial license</a>).
+      The terms below apply to the Software as a whole, including
+      the interaction between open-source and proprietary components.
+    </p>
+
+    <h2 id="2-license-tiers">2. License Tiers</h2>
+    <p>Agent Recon&trade; is available under three license tiers:</p>
+
+    <h3 id="2-1-community-tier">2.1 Community Tier (Free)</h3>
+    <ul>
+      <li><strong>Price:</strong> Free forever</li>
+      <li><strong>Permitted use:</strong> Individual developers for personal, non-commercial development projects</li>
+    </ul>
+    <p><strong>Features included:</strong></p>
+    <ul>
+      <li>Real-time event feed and WebSocket streaming</li>
+      <li>Token cost tracking and Usage API integration</li>
+      <li>Regex-based security classifications</li>
+      <li>Dashboard UI (waveform timeline, statistics, filters, session management)</li>
+      <li>Hook scripts for Claude Code event capture</li>
+      <li>7-day data retention</li>
+    </ul>
+    <p><strong>Features not included</strong> (require paid license):</p>
+    <ul>
+      <li>LLM-powered security chain analysis</li>
+      <li>LLM-powered session insights and coaching</li>
+      <li>LLM-powered hallucination scoring</li>
+      <li>LLM-powered environment recommendations</li>
+      <li>LLM-powered prompt quality analysis</li>
+      <li>Session history narratives</li>
+      <li>OTEL export</li>
+      <li>Encrypted archives</li>
+      <li>Multi-environment support</li>
+      <li>Extended data retention (up to 90 days)</li>
+    </ul>
+    <p>
+      <strong>Restrictions:</strong> The Community tier may not be redistributed as part of a
+      commercial product or service.
+    </p>
+
+    <h3 id="2-2-personal-tier">2.2 Personal Tier ($9.99/month or $84/year)</h3>
+    <ul>
+      <li><strong>Price:</strong> $9.99 per month, or $84 per year (30% annual savings)</li>
+      <li><strong>Permitted use:</strong> Individual developers purchasing with personal funds for full-featured use</li>
+      <li><strong>Features:</strong> All features, including all LLM-powered analysis, extended retention, OTEL export, encrypted archives, and multi-environment support</li>
+      <li><strong>Purchase requirement:</strong> Must be purchased with the User&rsquo;s own personal funds. The Personal tier may NOT be purchased by, reimbursed by, or expensed to an employer, client, or other business entity.</li>
+      <li><strong>License scope:</strong> Single individual, any number of personal machines</li>
+    </ul>
+
+    <h3 id="2-3-professional-tier">2.3 Professional Tier ($29/month or $279/year)</h3>
+    <ul>
+      <li><strong>Price:</strong> $29 per month, or $279 per year (20% annual savings)</li>
+      <li><strong>Permitted use:</strong> Developers whose use occurs in an employment, contractor, or commercial context, OR whose license is purchased or reimbursed by a business entity</li>
+      <li><strong>Features:</strong> All features (identical to Personal tier), plus invoice billing and priority support</li>
+    </ul>
+    <p><strong>Required when:</strong></p>
+    <ul>
+      <li>Use is in connection with employment or paid contracting</li>
+      <li>Purchase is made by or reimbursed by an employer or client</li>
+      <li>Use supports revenue-generating commercial activities</li>
+    </ul>
+    <p><strong>License scope:</strong> Single individual, any number of work machines</p>
+
+    <h2 id="3-llm-api-keys">3. LLM API Keys and Third-Party Services</h2>
+    <p>
+      Agent Recon&trade; does not provide LLM API access. The User supplies their own API
+      key(s) from any supported LLM provider (Anthropic, OpenAI, Google, or others).
+    </p>
+    <ul>
+      <li>The User is solely responsible for all costs associated with LLM API usage, including costs incurred by both the AI coding agent being observed (e.g., Claude Code, Cursor) and Agent Recon&trade;&rsquo;s analysis pipelines.</li>
+      <li>The User is responsible for compliance with the terms of service of their chosen LLM provider(s).</li>
+      <li>The Licensor is not responsible for the availability, pricing, terms, or performance of any third-party LLM provider.</li>
+    </ul>
+
+    <h2 id="4-license-key">4. License Key</h2>
+    <p>
+      Access to Personal and Professional tier features requires a valid license key
+      obtained through the authorized Agent Recon&trade; storefront.
+    </p>
+    <ul>
+      <li>License keys are non-transferable without written consent from the Licensor.</li>
+      <li>License keys are validated periodically via the Licensor&rsquo;s API and cached locally for offline operation.</li>
+      <li>If the validation endpoint is unreachable, the most recently cached license state is honored.</li>
+      <li>Tampering with, sharing, or circumventing license key validation is a violation of this EULA.</li>
+    </ul>
+
+    <h2 id="5-telemetry">5. Telemetry</h2>
+    <p>
+      Agent Recon&trade; includes an optional telemetry system that sends minimal,
+      non-identifying data (install ID, software version, platform, and timestamp)
+      to the Licensor&rsquo;s servers for product improvement and license compliance
+      monitoring. See the <a href="privacy.html">Privacy Policy</a> for full details.
+    </p>
+    <ul>
+      <li>Telemetry is <strong>opt-out</strong>: the User may disable telemetry at any time via Settings &gt; Telemetry or by setting <code>telemetry_enabled=false</code>.</li>
+      <li>The telemetry system must not be removed or disabled by any means other than the provided opt-out mechanism.</li>
+      <li>No source code, prompts, API keys, file contents, or personally identifiable information is collected by the telemetry system.</li>
+    </ul>
+
+    <h2 id="6-restrictions">6. Restrictions</h2>
+    <p>The User SHALL NOT:</p>
+    <ol type="a">
+      <li>Copy, redistribute, sublicense, sell, lease, or otherwise transfer the Software or any portion thereof to any third party, except as expressly permitted by the Apache License 2.0 for core components.</li>
+      <li>Reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code of the proprietary components, except to the extent expressly permitted by applicable law.</li>
+      <li>Remove, alter, or obscure any proprietary notices, license headers, or trademarks.</li>
+      <li>Use the Software to create a competing product or service that substantially replicates the functionality of Agent Recon&trade;.</li>
+      <li>Use the Software in any manner that violates applicable law or regulation.</li>
+      <li>Misrepresent the license tier under which the Software is used (e.g., using a Personal license in an employment context that requires Professional).</li>
+    </ol>
+
+    <h2 id="7-intellectual-property">7. Intellectual Property</h2>
+    <p>
+      The Software, including all proprietary components, modifications, and
+      enhancements, is the exclusive property of PNW Great Loop LLC. Core components
+      are licensed under Apache 2.0; proprietary components are licensed under
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE-COMMERCIAL">LICENSE-COMMERCIAL</a>.
+      This EULA does not transfer ownership of any component.
+    </p>
+    <p>
+      &ldquo;Agent Recon&rdquo; and the Agent Recon&trade; logo are trademarks of PNW Great Loop LLC.
+    </p>
+
+    <h2 id="8-disclaimer-of-warranties">8. Disclaimer of Warranties</h2>
+    <p class="caps">
+      THE SOFTWARE IS PROVIDED &ldquo;AS IS&rdquo; WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+    </p>
+    <p class="caps">
+      THE LICENSOR DOES NOT WARRANT THAT THE SOFTWARE WILL BE UNINTERRUPTED,
+      ERROR-FREE, OR SECURE. THE LICENSOR DOES NOT WARRANT THE ACCURACY,
+      COMPLETENESS, OR RELIABILITY OF ANY LLM-GENERATED OUTPUT, INCLUDING
+      SECURITY CLASSIFICATIONS, INSIGHTS, COACHING, HALLUCINATION SCORES,
+      OR RECOMMENDATIONS. LLM-GENERATED OUTPUTS ARE PROVIDED FOR INFORMATIONAL
+      PURPOSES ONLY AND SHOULD NOT BE RELIED UPON AS THE SOLE BASIS FOR SECURITY
+      OR DEVELOPMENT DECISIONS.
+    </p>
+
+    <h2 id="9-limitation-of-liability">9. Limitation of Liability</h2>
+    <p class="caps">
+      IN NO EVENT SHALL PNW GREAT LOOP LLC BE LIABLE FOR ANY INDIRECT, INCIDENTAL,
+      SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR IN CONNECTION
+      WITH THE USE OR INABILITY TO USE THE SOFTWARE, EVEN IF ADVISED OF THE
+      POSSIBILITY OF SUCH DAMAGES.
+    </p>
+    <p class="caps">
+      THE LICENSOR&rsquo;S TOTAL AGGREGATE LIABILITY SHALL NOT EXCEED THE AMOUNT PAID BY
+      THE USER FOR THE SOFTWARE IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM.
+    </p>
+    <p class="caps">
+      FOR COMMUNITY TIER USERS, THE LICENSOR&rsquo;S TOTAL LIABILITY SHALL NOT EXCEED
+      TEN DOLLARS ($10.00 USD).
+    </p>
+
+    <h2 id="10-termination">10. Termination</h2>
+    <ul>
+      <li>The User may terminate this EULA at any time by uninstalling the Software and destroying all copies.</li>
+      <li>The Licensor may terminate this EULA if the User breaches any term and fails to cure the breach within thirty (30) days of written notice.</li>
+      <li>Upon termination of a paid subscription, the installation reverts to Community tier functionality. No User data is deleted upon downgrade.</li>
+      <li>Sections 6, 7, 8, 9, and 11 survive termination.</li>
+    </ul>
+
+    <h2 id="11-governing-law">11. Governing Law</h2>
+    <p>
+      This EULA shall be governed by and construed in accordance with the laws of
+      the State of Washington, United States, without regard to its conflict of law
+      provisions. Any dispute arising under this EULA shall be resolved in the state
+      or federal courts located in Washington State.
+    </p>
+
+    <h2 id="12-changes-to-this-eula">12. Changes to This EULA</h2>
+    <p>
+      The Licensor may update this EULA from time to time. Material changes will be
+      communicated through the Software&rsquo;s update mechanism or via the Licensor&rsquo;s
+      website. Continued use of the Software after changes take effect constitutes
+      acceptance of the revised EULA.
+    </p>
+
+    <h2 id="13-severability">13. Severability</h2>
+    <p>
+      If any provision of this EULA is held to be unenforceable or invalid, that
+      provision shall be modified to the minimum extent necessary to make it
+      enforceable, and the remaining provisions shall continue in full force.
+    </p>
+
+    <h2 id="14-contact">14. Contact</h2>
+    <p>
+      PNW Great Loop LLC<br>
+      Email: <a href="mailto:license@agent-recon.net">license@agent-recon.net</a><br>
+      Web: <a href="https://www.agent-recon.net">https://www.agent-recon.net</a>
+    </p>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="eula.html">EULA</a>
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE">License</a>
+    </div>
+    <p>&copy; 2026 PNW Great Loop LLC. All rights reserved.</p>
+    <p>Agent Recon&trade; is a trademark of PNW Great Loop LLC.</p>
+    <div class="disclaimer">
+      Agent Recon is an independent product and is not affiliated with, endorsed by, or
+      sponsored by Anthropic, PBC. &ldquo;Claude&rdquo; and &ldquo;Claude Code&rdquo; are trademarks of Anthropic.
+      All other trademarks are the property of their respective owners.
+    </div>
+  </footer>
+
+</body>
+</html>

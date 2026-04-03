@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service - Agent Recon&trade;</title>
+  <meta name="description" content="Terms of Service for Agent Recon, a real-time observability dashboard for AI coding agents. Covers pricing, billing, refunds, cancellation, and data handling.">
+  <link rel="canonical" href="https://www.agent-recon.net/terms.html">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2129;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── Legal Content ────────────────────────────────────────────────── */
+    .legal-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .legal-content h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .legal-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .legal-content h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-content h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    .legal-content p {
+      margin-bottom: 12px;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .legal-content ul, .legal-content ol {
+      margin: 8px 0 16px 24px;
+      font-size: 15px;
+    }
+    .legal-content li {
+      margin-bottom: 4px;
+    }
+    .legal-content blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      margin: 16px 0;
+      background: var(--surface);
+      border-radius: 0 8px 8px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .legal-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+    .legal-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .legal-content th, .legal-content td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .legal-content th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    .legal-content td {
+      background: var(--surface2);
+    }
+    .legal-content .caps {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-links a { color: var(--muted); }
+    footer .footer-links a:hover { color: var(--text); }
+    .disclaimer {
+      max-width: 600px;
+      margin: 16px auto 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .legal-content { padding: 32px 16px 60px; }
+      .legal-content h1 { font-size: 26px; }
+      .nav-links { gap: 16px; }
+      .legal-content table { font-size: 13px; }
+      .legal-content th, .legal-content td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-brand">Agent <span>Recon</span>&trade;</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="https://github.com/genxcoder1999/agent-recon" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="legal-content">
+    <h1>Terms of Service</h1>
+    <div class="legal-meta">
+      <strong>Effective Date:</strong> March 2026 &middot;
+      <strong>Provider:</strong> PNW Great Loop LLC &middot;
+      <strong>Product:</strong> Agent Recon&trade;
+    </div>
+
+    <blockquote>
+      Agent Recon&trade; is an independent product and is not affiliated with, endorsed
+      by, or sponsored by Anthropic PBC. Claude, Claude Code, and the Anthropic
+      name and logo are trademarks of Anthropic PBC. Agent Recon&trade; is a trademark
+      of PNW Great Loop LLC.
+    </blockquote>
+
+    <h2 id="1-acceptance-of-terms">1. Acceptance of Terms</h2>
+    <p>
+      By purchasing a license, creating an account, or using any paid features of
+      Agent Recon&trade; (&ldquo;Service&rdquo;), you (&ldquo;Customer&rdquo;) agree to these Terms of Service
+      (&ldquo;Terms&rdquo;). These Terms apply to all paid transactions processed through the
+      Agent Recon&trade; storefront. Use of the free Community tier is governed by the
+      <a href="eula.html">End User License Agreement (EULA)</a>.
+    </p>
+
+    <h2 id="2-service-description">2. Service Description</h2>
+    <p>
+      Agent Recon&trade; is a locally-installed observability dashboard for AI coding
+      agent sessions. The Service includes:
+    </p>
+    <ul>
+      <li>Software distributed via npm and direct download</li>
+      <li>License key provisioning and validation</li>
+      <li>Software updates during the subscription period</li>
+      <li>Priority support (Professional tier)</li>
+    </ul>
+    <p>The Service does NOT include:</p>
+    <ul>
+      <li>LLM API access (the Customer supplies their own API key(s))</li>
+      <li>Hosting or cloud infrastructure (the software runs locally)</li>
+      <li>Guaranteed uptime for the license validation endpoint (graceful offline degradation is built in)</li>
+    </ul>
+
+    <h2 id="3-payment-processor">3. Payment Processor</h2>
+    <p>
+      All payments are processed by Lemonsqueezy (or a successor payment processor
+      designated by the Provider). By making a purchase, the Customer also agrees
+      to Lemonsqueezy&rsquo;s terms of service and privacy policy.
+    </p>
+    <p>
+      The Provider does not directly store credit card numbers, bank account
+      details, or other payment credentials. All payment data is handled by
+      the payment processor.
+    </p>
+
+    <h2 id="4-pricing-and-billing">4. Pricing and Billing</h2>
+
+    <h3 id="4-1-current-pricing">4.1 Current Pricing</h3>
+    <table>
+      <thead>
+        <tr><th>Tier</th><th>Monthly</th><th>Annual</th><th>Annual Savings</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Personal</td><td>$9.99/month</td><td>$84/year</td><td>30%</td></tr>
+        <tr><td>Professional</td><td>$29/month</td><td>$279/year</td><td>20%</td></tr>
+      </tbody>
+    </table>
+    <p>Prices are in US dollars (USD) and exclude applicable taxes.</p>
+
+    <h3 id="4-2-billing-cycle">4.2 Billing Cycle</h3>
+    <ul>
+      <li><strong>Monthly subscriptions</strong> are billed on the same day each month.</li>
+      <li><strong>Annual subscriptions</strong> are billed on the same date each year.</li>
+      <li>Billing begins on the date of purchase.</li>
+    </ul>
+
+    <h3 id="4-3-auto-renewal">4.3 Auto-Renewal</h3>
+    <p>
+      Subscriptions automatically renew at the end of each billing cycle unless
+      cancelled before the renewal date. The Customer will be charged the
+      then-current price at renewal.
+    </p>
+
+    <h3 id="4-4-price-changes">4.4 Price Changes</h3>
+    <p>
+      The Provider may change pricing at any time. Price changes take effect at
+      the next renewal cycle, not mid-cycle. The Provider will notify the Customer
+      of price changes at least thirty (30) days before the renewal date via:
+    </p>
+    <ul>
+      <li>Email to the address associated with the Customer&rsquo;s account, AND</li>
+      <li>A notice in the Software&rsquo;s update mechanism or on the Provider&rsquo;s website</li>
+    </ul>
+    <p>
+      If the Customer does not agree to the new pricing, they may cancel before
+      the next renewal date.
+    </p>
+
+    <h2 id="5-refund-policy">5. Refund Policy</h2>
+
+    <h3 id="5-1-fourteen-day-money-back-guarantee">5.1 Fourteen-Day Money-Back Guarantee</h3>
+    <p>
+      The Customer may request a full refund within fourteen (14) days of the
+      initial purchase date, no questions asked. This applies to both monthly
+      and annual subscriptions.
+    </p>
+
+    <h3 id="5-2-refund-process">5.2 Refund Process</h3>
+    <p>
+      To request a refund, contact <a href="mailto:license@agent-recon.net">license@agent-recon.net</a> with the order number
+      or license key. Refunds are processed through the original payment method
+      within five (5) to ten (10) business days.
+    </p>
+
+    <h3 id="5-3-renewal-refunds">5.3 Renewal Refunds</h3>
+    <p>
+      Refunds for auto-renewal charges may be requested within seven (7) days of
+      the renewal charge date.
+    </p>
+
+    <h3 id="5-4-exceptions">5.4 Exceptions</h3>
+    <p>Refunds are not available:</p>
+    <ul>
+      <li>After the applicable refund period has expired</li>
+      <li>If the license key has been shared with or transferred to another party</li>
+      <li>For complimentary (free) license keys</li>
+    </ul>
+
+    <h2 id="6-subscription-cancellation">6. Subscription Cancellation</h2>
+
+    <h3 id="6-1-how-to-cancel">6.1 How to Cancel</h3>
+    <p>The Customer may cancel at any time through:</p>
+    <ul>
+      <li>The account dashboard on the Provider&rsquo;s website</li>
+      <li>Email to <a href="mailto:license@agent-recon.net">license@agent-recon.net</a></li>
+    </ul>
+
+    <h3 id="6-2-effect-of-cancellation">6.2 Effect of Cancellation</h3>
+    <ul>
+      <li><strong>Monthly subscriptions:</strong> Access continues until the end of the current billing period. No further charges are made.</li>
+      <li><strong>Annual subscriptions:</strong> Access continues until the end of the annual billing period. No partial refunds are issued for unused months beyond the 14-day refund window.</li>
+      <li>Upon expiration, the installation reverts to Community tier functionality. No Customer data is deleted.</li>
+    </ul>
+
+    <h3 id="6-3-reactivation">6.3 Reactivation</h3>
+    <p>
+      A cancelled subscription may be reactivated at any time by purchasing a new
+      license. The previously cached license key will be replaced.
+    </p>
+
+    <h2 id="7-taxes">7. Taxes</h2>
+    <p>
+      The Customer is responsible for all applicable taxes (sales tax, VAT, GST,
+      or other taxes) imposed by their jurisdiction. The payment processor may
+      collect and remit taxes where required by law. Displayed prices may or may
+      not include tax depending on the Customer&rsquo;s location.
+    </p>
+
+    <h2 id="8-data-handling">8. Data Handling</h2>
+
+    <h3 id="8-1-local-data">8.1 Local Data</h3>
+    <p>
+      Agent Recon&trade; runs locally on the Customer&rsquo;s machine. All session data, event
+      logs, and LLM analysis results are stored in a local SQLite database on the
+      Customer&rsquo;s machine. The Provider does not have access to this data.
+    </p>
+
+    <h3 id="8-2-telemetry-data">8.2 Telemetry Data</h3>
+    <p>
+      The optional telemetry system collects minimal, non-identifying data as
+      described in the <a href="privacy.html">Privacy Policy</a>. The Customer may opt out at any time.
+    </p>
+
+    <h3 id="8-3-payment-data">8.3 Payment Data</h3>
+    <p>
+      Payment and account data is handled by the payment processor (Lemonsqueezy)
+      and is subject to their privacy policy. The Provider stores only:
+    </p>
+    <ul>
+      <li>Email address (for license key delivery and support)</li>
+      <li>License key and tier information</li>
+      <li>Transaction history (dates, amounts, invoice numbers)</li>
+    </ul>
+
+    <h3 id="8-4-data-deletion">8.4 Data Deletion</h3>
+    <p>
+      The Customer may request deletion of their account and associated data by
+      contacting <a href="mailto:license@agent-recon.net">license@agent-recon.net</a>. Telemetry data can be deleted via the
+      self-service data deletion endpoint (see <a href="privacy.html">Privacy Policy</a>).
+    </p>
+
+    <h2 id="9-account-security">9. Account Security</h2>
+    <p>
+      The Customer is responsible for maintaining the confidentiality of their
+      license key. The Customer must notify the Provider promptly if they become
+      aware of unauthorized use of their license key.
+    </p>
+
+    <h2 id="10-intellectual-property">10. Intellectual Property</h2>
+    <p>
+      Agent Recon&trade;, including its name, logo, documentation, and software, is the
+      intellectual property of PNW Great Loop LLC. These Terms do not grant any
+      rights to the Provider&rsquo;s trademarks or intellectual property except the
+      limited license to use the Software as described in the <a href="eula.html">EULA</a>.
+    </p>
+
+    <h2 id="11-disclaimer-of-warranties">11. Disclaimer of Warranties</h2>
+    <p class="caps">
+      THE SERVICE IS PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE&rdquo; WITHOUT WARRANTY OF ANY
+      KIND. THE PROVIDER DOES NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED,
+      ERROR-FREE, OR SECURE. SEE THE <a href="eula.html">EULA</a> (SECTION 8) FOR THE COMPLETE WARRANTY
+      DISCLAIMER.
+    </p>
+
+    <h2 id="12-limitation-of-liability">12. Limitation of Liability</h2>
+    <p class="caps">
+      THE PROVIDER&rsquo;S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATED TO THESE
+      TERMS SHALL NOT EXCEED THE AMOUNT PAID BY THE CUSTOMER IN THE TWELVE (12)
+      MONTHS PRECEDING THE CLAIM. SEE THE <a href="eula.html">EULA</a> (SECTION 9) FOR THE COMPLETE
+      LIABILITY LIMITATION.
+    </p>
+
+    <h2 id="13-indemnification">13. Indemnification</h2>
+    <p>
+      The Customer agrees to indemnify and hold harmless PNW Great Loop LLC from
+      any claims, damages, losses, or expenses (including reasonable attorney fees)
+      arising from the Customer&rsquo;s use of the Service or violation of these Terms.
+    </p>
+
+    <h2 id="14-modifications-to-terms">14. Modifications to Terms</h2>
+    <p>
+      The Provider may update these Terms at any time. Material changes will be
+      communicated at least thirty (30) days in advance via email or the Provider&rsquo;s
+      website. Continued use of the Service after changes take effect constitutes
+      acceptance of the revised Terms.
+    </p>
+
+    <h2 id="15-governing-law">15. Governing Law</h2>
+    <p>
+      These Terms shall be governed by and construed in accordance with the laws
+      of the State of Washington, United States, without regard to its conflict of
+      law provisions. Any dispute shall be resolved in the state or federal courts
+      located in Washington State.
+    </p>
+
+    <h2 id="16-severability">16. Severability</h2>
+    <p>
+      If any provision of these Terms is held to be unenforceable or invalid,
+      that provision shall be modified to the minimum extent necessary, and the
+      remaining provisions shall continue in full force.
+    </p>
+
+    <h2 id="17-entire-agreement">17. Entire Agreement</h2>
+    <p>
+      These Terms, together with the <a href="eula.html">EULA</a>,
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE">LICENSE</a>,
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE-COMMERCIAL">LICENSE-COMMERCIAL</a>,
+      and <a href="privacy.html">Privacy Policy</a>, constitute the entire agreement between the parties
+      regarding the Service.
+    </p>
+
+    <h2 id="18-contact">18. Contact</h2>
+    <p>
+      PNW Great Loop LLC<br>
+      Email: <a href="mailto:license@agent-recon.net">license@agent-recon.net</a><br>
+      Web: <a href="https://www.agent-recon.net">https://www.agent-recon.net</a>
+    </p>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="eula.html">EULA</a>
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE">License</a>
+    </div>
+    <p>&copy; 2026 PNW Great Loop LLC. All rights reserved.</p>
+    <p>Agent Recon&trade; is a trademark of PNW Great Loop LLC.</p>
+    <div class="disclaimer">
+      Agent Recon is an independent product and is not affiliated with, endorsed by, or
+      sponsored by Anthropic, PBC. &ldquo;Claude&rdquo; and &ldquo;Claude Code&rdquo; are trademarks of Anthropic.
+      All other trademarks are the property of their respective owners.
+    </div>
+  </footer>
+
+</body>
+</html>
