@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>License - Agent Recon</title>
+  <meta name="description" content="Agent Recon open-core license. Core components under Apache License 2.0, proprietary components under commercial license, hook scripts under MIT License.">
+  <link rel="canonical" href="https://www.agent-recon.net/license.html">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2129;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── Legal Content ────────────────────────────────────────────────── */
+    .legal-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .legal-content h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .legal-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .legal-content h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-content h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    .legal-content p {
+      margin-bottom: 12px;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .legal-content ul, .legal-content ol {
+      margin: 8px 0 16px 24px;
+      font-size: 15px;
+    }
+    .legal-content li {
+      margin-bottom: 4px;
+    }
+    .legal-content blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      margin: 16px 0;
+      background: var(--surface);
+      border-radius: 0 8px 8px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .legal-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+    .legal-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .legal-content th, .legal-content td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .legal-content th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    .legal-content td {
+      background: var(--surface2);
+    }
+    .legal-content .caps {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-links a { color: var(--muted); }
+    footer .footer-links a:hover { color: var(--text); }
+    .disclaimer {
+      max-width: 600px;
+      margin: 16px auto 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .legal-content { padding: 32px 16px 60px; }
+      .legal-content h1 { font-size: 26px; }
+      .nav-links { gap: 16px; }
+      .legal-content table { font-size: 13px; }
+      .legal-content th, .legal-content td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-brand">Agent <span>Recon</span>&trade;</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="https://github.com/genxcoder1999/agent-recon" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="legal-content">
+    <h1>Agent Recon&trade; &mdash; Open-Core License</h1>
+    <p class="legal-meta">&copy; 2026 PNW Great Loop LLC. All rights reserved.</p>
+
+    <blockquote>
+      Agent Recon&trade; is an independent product and is not affiliated with, endorsed
+      by, or sponsored by Anthropic PBC. Claude, Claude Code, and the Anthropic
+      name and logo are trademarks of Anthropic PBC. Agent Recon&trade; is a trademark
+      of PNW Great Loop LLC.
+    </blockquote>
+
+    <hr>
+
+    <h2 id="open-core-licensing-overview">Open-Core Licensing Overview</h2>
+    <p>This repository uses a dual-license model:</p>
+    <ol>
+      <li>
+        <strong>Core Components</strong> &mdash; Licensed under the Apache License, Version 2.0
+        (see below). You may freely use, modify, and redistribute these
+        components subject to the Apache 2.0 terms.
+      </li>
+      <li>
+        <strong>Proprietary Components</strong> &mdash; Licensed under a separate commercial license
+        (see <a href="eula.html">EULA</a>). These components may not be used, copied, or
+        distributed except under the terms of a valid Agent Recon&trade; license.
+      </li>
+      <li>
+        <strong>Hook Scripts</strong> &mdash; Licensed under the MIT License (see headers in
+        individual files). These may be freely used, modified, and
+        redistributed with minimal restriction.
+      </li>
+    </ol>
+    <p>
+      See the header comment in each source file to determine which license
+      applies. Files without a license header are covered by the Apache License,
+      Version 2.0.
+    </p>
+
+    <hr>
+
+    <h2 id="core-components">Core Components</h2>
+    <p>Covered files include:</p>
+    <ul>
+      <li><code>server/server.js</code> &mdash; Event ingestion server</li>
+      <li><code>server/db.js</code> &mdash; SQLite database layer</li>
+      <li><code>server/db-migrations.js</code> &mdash; Schema migrations</li>
+      <li><code>server/tokens.js</code> &mdash; Token cost tracking</li>
+      <li><code>server/event-types.js</code> &mdash; Event type constants</li>
+      <li><code>server/start.js</code> &mdash; Startup wrapper</li>
+      <li><code>server/platform.js</code> &mdash; Cross-platform utilities</li>
+      <li><code>server/routes.js</code> &mdash; HTTP route definitions</li>
+      <li><code>server/providers/</code> &mdash; LLM provider abstraction (base layer)</li>
+      <li><code>src/js/00-config.js</code> &mdash; Frontend configuration</li>
+      <li><code>src/js/01-categories.js</code> &mdash; Event categorization</li>
+      <li><code>src/js/02-security-engine.js</code> &mdash; Regex security engine</li>
+      <li><code>src/js/03-session-colors.js</code> &mdash; Session display utilities</li>
+      <li><code>src/js/04-sound.js</code> &mdash; Sound engine</li>
+      <li><code>src/js/05-state.js</code> &mdash; Frontend state</li>
+      <li><code>src/js/06-dom.js</code> &mdash; DOM references</li>
+      <li><code>src/js/07-stats-bar.js</code> &mdash; Statistics bar</li>
+      <li><code>src/js/08-feed.js</code> &mdash; Event feed</li>
+      <li><code>src/js/10-event-handler.js</code> &mdash; Event routing</li>
+      <li><code>src/js/11-websocket.js</code> &mdash; WebSocket client</li>
+      <li><code>src/js/12-controls.js</code> &mdash; UI controls</li>
+      <li><code>src/js/13-canvas.js</code> &mdash; Waveform timeline</li>
+      <li><code>src/js/14-env-widget.js</code> &mdash; Environment widget</li>
+      <li><code>src/js/15-main.js</code> &mdash; App entry point</li>
+      <li><code>src/js/16-tokens-view.js</code> &mdash; Token display</li>
+      <li><code>src/js/20-accessibility.js</code> &mdash; Accessibility</li>
+      <li><code>src/template.html</code> &mdash; HTML template</li>
+      <li><code>src/css/</code> &mdash; All CSS source files</li>
+      <li><code>build.js</code> &mdash; Build system</li>
+      <li><code>public/index.html</code> &mdash; Built SPA</li>
+      <li><code>setup.ps1</code> &mdash; Windows setup script</li>
+      <li><code>setup-wsl.sh</code> &mdash; WSL setup script</li>
+      <li><code>setup-macos.sh</code> &mdash; macOS setup script</li>
+      <li><code>setup-linux.sh</code> &mdash; Linux setup script</li>
+      <li><code>package.json</code> &mdash; Package manifest</li>
+      <li><code>server/tests/</code> &mdash; All test files</li>
+      <li><code>test/</code> &mdash; Platform test infrastructure</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="proprietary-components">Proprietary Components</h2>
+    <p>See <a href="eula.html">EULA</a> for terms:</p>
+    <ul>
+      <li><code>server/security-llm.js</code> &mdash; LLM security chain analysis</li>
+      <li><code>server/insights-llm.js</code> &mdash; LLM session insight analysis</li>
+      <li><code>server/environment-llm.js</code> &mdash; LLM environment recommendations</li>
+      <li><code>server/prompt-analysis-llm.js</code> &mdash; LLM prompt quality analysis</li>
+      <li><code>server/session-history-llm.js</code> &mdash; LLM session history narratives</li>
+      <li><code>server/telemetry.js</code> &mdash; Telemetry system</li>
+      <li><code>server/archiver.js</code> &mdash; Encrypted archive management</li>
+      <li><code>server/process-monitor.js</code> &mdash; Process observability</li>
+      <li><code>server/otel-exporter.js</code> &mdash; OTLP export</li>
+      <li><code>server/tls-setup.js</code> &mdash; TLS certificate management</li>
+      <li><code>installer/</code> &mdash; Guided installer (all files)</li>
+      <li><code>azure/</code> &mdash; Azure telemetry infrastructure</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="hook-scripts">Hook Scripts &mdash; MIT License</h2>
+    <p>See file headers for the full MIT License text:</p>
+    <ul>
+      <li><code>.claude/hooks/send-event.py</code> &mdash; Cross-platform hook forwarder</li>
+      <li><code>.claude/hooks/send-event-wsl.py</code> &mdash; WSL-specific hook forwarder</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="apache-license">Apache License, Version 2.0</h2>
+    <p><strong>Version 2.0, January 2004</strong><br>
+    <a href="http://www.apache.org/licenses/" target="_blank" rel="noopener">http://www.apache.org/licenses/</a></p>
+
+    <h3>Terms and Conditions for Use, Reproduction, and Distribution</h3>
+
+    <h3 id="section-1">1. Definitions</h3>
+    <p>
+      &ldquo;License&rdquo; shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+    </p>
+    <p>
+      &ldquo;Licensor&rdquo; shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+    </p>
+    <p>
+      &ldquo;Legal Entity&rdquo; shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      &ldquo;control&rdquo; means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+    </p>
+    <p>
+      &ldquo;You&rdquo; (or &ldquo;Your&rdquo;) shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+    </p>
+    <p>
+      &ldquo;Source&rdquo; form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+    </p>
+    <p>
+      &ldquo;Object&rdquo; form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but not
+      limited to compiled object code, generated documentation, and
+      conversions to other media types.
+    </p>
+    <p>
+      &ldquo;Work&rdquo; shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work.
+    </p>
+    <p>
+      &ldquo;Derivative Works&rdquo; shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the
+      purposes of this License, Derivative Works shall not include works
+      that remain separable from, or merely link (or bind by name) to the
+      interfaces of, the Work and Derivative Works thereof.
+    </p>
+    <p>
+      &ldquo;Contribution&rdquo; shall mean any work of authorship, including the
+      original version of the Work and any modifications or additions to
+      that Work or Derivative Works thereof, that is intentionally submitted
+      to the Licensor for inclusion in the Work by the copyright owner or by
+      an individual or Legal Entity authorized to submit on behalf of the
+      copyright owner. For the purposes of this definition, &ldquo;submitted&rdquo;
+      means any form of electronic, verbal, or written communication sent to
+      the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as &ldquo;Not a Contribution.&rdquo;
+    </p>
+    <p>
+      &ldquo;Contributor&rdquo; shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by the Licensor and
+      subsequently incorporated within the Work.
+    </p>
+
+    <h3 id="section-2">2. Grant of Copyright License</h3>
+    <p>
+      Subject to the terms and conditions of this License, each Contributor
+      hereby grants to You a perpetual, worldwide, non-exclusive, no-charge,
+      royalty-free, irrevocable copyright license to reproduce, prepare
+      Derivative Works of, publicly display, publicly perform, sublicense,
+      and distribute the Work and such Derivative Works in Source or Object form.
+    </p>
+
+    <h3 id="section-3">3. Grant of Patent License</h3>
+    <p>
+      Subject to the terms and conditions of this License, each Contributor
+      hereby grants to You a perpetual, worldwide, non-exclusive, no-charge,
+      royalty-free, irrevocable (except as stated in this section) patent
+      license to make, have made, use, offer to sell, sell, import, and
+      otherwise transfer the Work, where such license applies only to those
+      patent claims licensable by such Contributor that are necessarily
+      infringed by their Contribution(s) alone or by combination of their
+      Contribution(s) with the Work to which such Contribution(s) was
+      submitted. If You institute patent litigation against any entity
+      (including a cross-claim or counterclaim in a lawsuit) alleging that
+      the Work or a Contribution incorporated within the Work constitutes
+      direct or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate as of
+      the date such litigation is filed.
+    </p>
+
+    <h3 id="section-4">4. Redistribution</h3>
+    <p>
+      You may reproduce and distribute copies of the Work or Derivative Works
+      thereof in any medium, with or without modifications, and in Source or
+      Object form, provided that You meet the following conditions:
+    </p>
+    <ol type="a">
+      <li>You must give any other recipients of the Work or Derivative
+          Works a copy of this License; and</li>
+      <li>You must cause any modified files to carry prominent notices
+          stating that You changed the files; and</li>
+      <li>You must retain, in the Source form of any Derivative Works that
+          You distribute, all copyright, patent, trademark, and attribution
+          notices from the Source form of the Work, excluding those notices
+          that do not pertain to any part of the Derivative Works; and</li>
+      <li>If the Work includes a &ldquo;NOTICE&rdquo; text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding any notices that do not
+          pertain to any part of the Derivative Works, in at least one of
+          the following places: within a NOTICE text file distributed as
+          part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents of
+          the NOTICE file are for informational purposes only and do not
+          modify the License. You may add Your own attribution notices
+          within Derivative Works that You distribute, alongside or as an
+          addendum to the NOTICE text from the Work, provided that such
+          additional attribution notices cannot be construed as modifying
+          the License.</li>
+    </ol>
+    <p>
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions for
+      use, reproduction, or distribution of Your modifications, or for any
+      such Derivative Works as a whole, provided Your use, reproduction,
+      and distribution of the Work otherwise complies with the conditions
+      stated in this License.
+    </p>
+
+    <h3 id="section-5">5. Submission of Contributions</h3>
+    <p>
+      Unless You explicitly state otherwise, any Contribution intentionally
+      submitted for inclusion in the Work by You to the Licensor shall be
+      under the terms and conditions of this License, without any additional
+      terms or conditions. Notwithstanding the above, nothing herein shall
+      supersede or modify the terms of any separate license agreement you
+      may have executed with Licensor regarding such Contributions.
+    </p>
+
+    <h3 id="section-6">6. Trademarks</h3>
+    <p>
+      This License does not grant permission to use the trade names,
+      trademarks, service marks, or product names of the Licensor, except
+      as required for reasonable and customary use in describing the origin
+      of the Work and reproducing the content of the NOTICE file.
+    </p>
+
+    <h3 id="section-7">7. Disclaimer of Warranty</h3>
+    <p class="caps">
+      Unless required by applicable law or agreed to in writing, Licensor
+      provides the Work (and each Contributor provides its Contributions)
+      on an &ldquo;AS IS&rdquo; basis, without warranties or conditions of any kind,
+      either express or implied, including, without limitation, any
+      warranties or conditions of title, non-infringement, merchantability,
+      or fitness for a particular purpose. You are solely responsible for
+      determining the appropriateness of using or redistributing the Work
+      and assume any risks associated with Your exercise of permissions
+      under this License.
+    </p>
+
+    <h3 id="section-8">8. Limitation of Liability</h3>
+    <p class="caps">
+      In no event and under no legal theory, whether in tort (including
+      negligence), contract, or otherwise, unless required by applicable
+      law (such as deliberate and grossly negligent acts) or agreed to in
+      writing, shall any Contributor be liable to You for damages, including
+      any direct, indirect, special, incidental, or consequential damages
+      of any character arising as a result of this License or out of the
+      use or inability to use the Work (including but not limited to
+      damages for loss of goodwill, work stoppage, computer failure or
+      malfunction, or any and all other commercial damages or losses), even
+      if such Contributor has been advised of the possibility of such damages.
+    </p>
+
+    <h3 id="section-9">9. Accepting Warranty or Additional Liability</h3>
+    <p>
+      While redistributing the Work or Derivative Works thereof, You may
+      choose to offer, and charge a fee for, acceptance of support, warranty,
+      indemnity, or other liability obligations and/or rights consistent
+      with this License. However, in accepting such obligations, You may act
+      only on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify, defend,
+      and hold each Contributor harmless for any liability incurred by, or
+      claims asserted against, such Contributor by reason of your accepting
+      any such warranty or additional liability.
+    </p>
+
+    <hr>
+
+    <h3>End of Terms and Conditions</h3>
+    <p>Copyright 2026 PNW Great Loop LLC</p>
+    <p>
+      Licensed under the Apache License, Version 2.0 (the &ldquo;License&rdquo;);
+      you may not use this file except in compliance with the License.
+      You may obtain a copy of the License at
+    </p>
+    <p>
+      <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">http://www.apache.org/licenses/LICENSE-2.0</a>
+    </p>
+    <p>
+      Unless required by applicable law or agreed to in writing, software
+      distributed under the License is distributed on an &ldquo;AS IS&rdquo; basis,
+      without warranties or conditions of any kind, either express or implied.
+      See the License for the specific language governing permissions and
+      limitations under the License.
+    </p>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="eula.html">EULA</a>
+      <a href="license.html">License</a>
+    </div>
+    <p>&copy; 2026 PNW Great Loop LLC. All rights reserved.</p>
+    <p>Agent Recon&trade; is a trademark of PNW Great Loop LLC.</p>
+    <div class="disclaimer">
+      Agent Recon is an independent product and is not affiliated with, endorsed by, or
+      sponsored by Anthropic, PBC. &ldquo;Claude&rdquo; and &ldquo;Claude Code&rdquo; are trademarks of Anthropic.
+      All other trademarks are the property of their respective owners.
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troubleshooting - Agent Recon</title>
+  <meta name="description" content="Troubleshooting guide for Agent Recon. Covers common dashboard issues, server diagnostics, hook verification, debug mode, and developer support tools.">
+  <link rel="canonical" href="https://www.agent-recon.net/docs/troubleshooting.html">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2129;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+    }
+
+    /* -- Nav ------------------------------------------------------------ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* -- Legal Content -------------------------------------------------- */
+    .legal-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .legal-content h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .legal-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .legal-content h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-content h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    .legal-content h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 20px;
+      margin-bottom: 6px;
+    }
+    .legal-content p {
+      margin-bottom: 12px;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .legal-content ul, .legal-content ol {
+      margin: 8px 0 16px 24px;
+      font-size: 15px;
+    }
+    .legal-content li {
+      margin-bottom: 4px;
+    }
+    .legal-content blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      margin: 16px 0;
+      background: var(--surface);
+      border-radius: 0 8px 8px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .legal-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+    .legal-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .legal-content th, .legal-content td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .legal-content th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    .legal-content td {
+      background: var(--surface2);
+    }
+    .legal-content pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 12px 0 16px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .legal-content pre code {
+      background: none;
+      padding: 0;
+      font-size: inherit;
+      color: var(--green);
+    }
+
+    /* -- Footer --------------------------------------------------------- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-links a { color: var(--muted); }
+    footer .footer-links a:hover { color: var(--text); }
+    .disclaimer {
+      max-width: 600px;
+      margin: 16px auto 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* -- Responsive ----------------------------------------------------- */
+    @media (max-width: 768px) {
+      .legal-content { padding: 32px 16px 60px; }
+      .legal-content h1 { font-size: 26px; }
+      .nav-links { gap: 16px; }
+      .legal-content table { font-size: 13px; }
+      .legal-content th, .legal-content td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-brand">Agent <span>Recon</span>&trade;</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="https://github.com/genxcoder1999/agent-recon" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="legal-content">
+    <h1>Troubleshooting Guide</h1>
+    <div class="legal-meta">
+      This guide covers common issues for both dashboard users and developers/support engineers.
+      For architecture details see the Architecture Reference (ARCHITECTURE.md),
+      Database Schema (DATABASE.md), and API Reference (API.md).
+    </div>
+
+    <h2 id="user-section">User Section</h2>
+    <p>These are the most common issues reported by dashboard users.</p>
+
+    <h3 id="dashboard-shows-no-events">Dashboard shows no events</h3>
+    <p>
+      <strong>Symptoms:</strong> The dashboard loads but the timeline is empty. The connection
+      dot may be green (connected) but no event cards appear.
+    </p>
+    <p><strong>Checklist:</strong></p>
+    <ol>
+      <li>
+        <strong>Verify hook installation.</strong> Claude Code must have <code>send-event.py</code>
+        (or <code>send-event-wsl.py</code> on WSL) registered for all 13 hook events in
+        <code>~/.claude/settings.json</code>:
+        <pre><code>{
+  "hooks": {
+    "PreToolUse":          [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "PostToolUse":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "PostToolUseFailure":  [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "UserPromptSubmit":    [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "Stop":                [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "SessionStart":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "SessionEnd":          [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "SubagentStart":       [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "SubagentStop":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "TaskCompleted":       [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "Notification":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "PreCompact":          [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "TeammateIdle":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }]
+  }
+}</code></pre>
+        <p>
+          Run the appropriate setup script to install hooks: <code>setup.ps1</code> (Windows),
+          <code>setup-wsl.sh</code> (WSL), <code>setup-macos.sh</code> (macOS), or
+          <code>setup-linux.sh</code> (Linux).
+        </p>
+      </li>
+      <li>
+        <strong>Verify the server is running.</strong> From any terminal:
+        <pre><code>curl http://localhost:3131/health</code></pre>
+        <p>
+          Expected response: <code>{"status":"ok"}</code>. If the command fails, the server is
+          not running.
+        </p>
+      </li>
+      <li>
+        <strong>Check port 3131.</strong> Ensure no firewall rule blocks localhost:3131. On WSL2,
+        verify that localhost forwarding is working (Windows should forward WSL localhost
+        automatically on recent builds).
+      </li>
+      <li>
+        <strong>Start a Claude Code session.</strong> Events only appear when Claude Code is
+        actively running with hooks installed. Start a conversation and send a prompt &mdash;
+        you should see events within 1&ndash;2 seconds.
+      </li>
+    </ol>
+
+    <h3 id="websocket-keeps-disconnecting">WebSocket keeps disconnecting</h3>
+    <p>
+      <strong>Symptoms:</strong> The connection dot flashes between green and red. Events appear
+      intermittently or the dashboard shows a reconnecting message.
+    </p>
+    <p><strong>Possible causes:</strong></p>
+    <ul>
+      <li>
+        <strong>Firewall or proxy interference.</strong> Some corporate firewalls or browser
+        extensions terminate idle WebSocket connections. Try adding an exception for localhost:3131.
+      </li>
+      <li>
+        <strong>WSL2 localhost forwarding.</strong> On older Windows builds, WSL2 localhost
+        forwarding can be unreliable. Check that <code>curl http://localhost:3131/health</code>
+        works from within WSL. If not, try using the WSL gateway IP instead.
+      </li>
+      <li>
+        <strong>Browser tab throttling.</strong> Background tabs in Chrome/Edge are aggressively
+        throttled after 5 minutes, which can cause WebSocket timeouts. Keep the dashboard tab in
+        the foreground or pin it to prevent throttling.
+      </li>
+      <li>
+        <strong>Server crash.</strong> Check the server terminal for error output. The most common
+        crash cause is a corrupted SQLite database &mdash; see &ldquo;Server won&rsquo;t start&rdquo; below.
+      </li>
+    </ul>
+
+    <h3 id="token-costs-show-zero">Token costs show $0.00</h3>
+    <p>
+      <strong>Symptoms:</strong> Session cost chips in the nav bar and session headers show $0.00
+      even though Claude Code is being used.
+    </p>
+    <p><strong>Requirements for cost tracking:</strong></p>
+    <ul>
+      <li>
+        <strong>Real-time costs</strong> (from hook payloads) require that Claude Code sends
+        <code>usage</code> data in Stop events. This is standard behavior and should work
+        automatically. If costs are $0.00, check that Stop events are appearing in the timeline.
+      </li>
+      <li>
+        <strong>Verified costs</strong> (from Anthropic Usage API) require an <strong>Admin API
+        key</strong>, not a regular inference key. Configure it in Settings as the
+        &ldquo;Anthropic Admin API Key&rdquo;. The Usage API is polled on a configurable interval
+        (default: 20 minutes).
+      </li>
+      <li>
+        <strong>Polling interval.</strong> After entering the Admin API key, wait up to 20 minutes
+        for the first poll. You can adjust the interval in Settings
+        (<code>usage_api_poll_interval_min</code>).
+      </li>
+    </ul>
+
+    <h3 id="security-tab-is-empty">Security tab is empty</h3>
+    <p>
+      <strong>Symptoms:</strong> The Security tab shows no events or chains.
+    </p>
+    <p>
+      This is normal if no security-relevant events have occurred. The Security tab only shows:
+    </p>
+    <ul>
+      <li>
+        Events classified by the regex engine (Bash commands with network calls, credential
+        access, code injection patterns, etc.)
+      </li>
+      <li>
+        LLM-analyzed security chains (requires <code>security_llm_enabled</code> setting to be
+        <code>true</code> and an Anthropic API key configured)
+      </li>
+      <li>
+        Process spawn events from the process monitor (requires
+        <code>process_monitor_enabled</code> to be <code>true</code>)
+      </li>
+    </ul>
+    <p>
+      Run a Claude Code session that involves Bash commands with network activity, file writes to
+      sensitive paths, or credential operations to see security events appear.
+    </p>
+
+    <h3 id="insights-show-pending-forever">Insights show &ldquo;pending&rdquo; forever</h3>
+    <p>
+      <strong>Symptoms:</strong> The Insights tab shows session cards stuck in a
+      &ldquo;pending&rdquo; or &ldquo;analyzing&rdquo; state that never complete.
+    </p>
+    <p><strong>Requirements:</strong></p>
+    <ul>
+      <li>An Anthropic <strong>Inference</strong> API key must be configured in Settings.</li>
+      <li>The <code>insights_enabled</code> setting must be <code>true</code> (it is by default).</li>
+      <li>
+        The configured model must be available on your API key. Default:
+        <code>claude-haiku-4-5-20251001</code>.
+      </li>
+    </ul>
+    <p><strong>Debugging:</strong></p>
+    <ul>
+      <li>
+        Check the server terminal for LLM API errors (rate limits, authentication failures,
+        model not found).
+      </li>
+      <li>
+        Verify the API key works: in Settings, check that the key shows as
+        &ldquo;configured&rdquo; (not empty).
+      </li>
+      <li>Insights require at least 1 UserPromptSubmit event in the session.</li>
+    </ul>
+
+    <h3 id="server-wont-start">Server won&rsquo;t start</h3>
+    <p>
+      <strong>Symptoms:</strong> <code>npm start</code> or <code>node start.js</code> fails with
+      an error.
+    </p>
+    <p><strong>Common causes:</strong></p>
+    <ul>
+      <li>
+        <strong>Port 3131 already in use.</strong> Another process is listening on port 3131.
+        Either stop it or set a different port:
+        <pre><code>PORT=3132 npm start</code></pre>
+      </li>
+      <li>
+        <strong>better-sqlite3 native binary mismatch.</strong> If you see
+        <code>ERR_DLOPEN_FAILED</code> or similar, <code>start.js</code> should auto-detect and
+        rebuild. If it fails, manually rebuild:
+        <pre><code>cd server &amp;&amp; npm rebuild better-sqlite3</code></pre>
+      </li>
+      <li>
+        <strong>SQLite database corruption.</strong> If you see <code>SQLITE_CORRUPT</code> or
+        <code>SQLITE_NOTADB</code>, the database file may be damaged. Rename
+        <code>data/agent-recon.db</code> (and any <code>-wal</code>/<code>-shm</code> files) and
+        restart &mdash; a fresh database will be created automatically.
+      </li>
+      <li>
+        <strong>Node.js version.</strong> Agent Recon requires Node.js 18+. Check with
+        <code>node --version</code>.
+      </li>
+    </ul>
+
+    <h3 id="events-appear-duplicated">Events appear duplicated</h3>
+    <p>
+      <strong>Symptoms:</strong> The same event appears twice in the timeline.
+    </p>
+    <p>
+      The dedup system uses a fingerprint of
+      <code>session_id|agent_id|hook_event_name|tool_use_id|tool_name|prompt[:40]</code> with a
+      2-second window. Duplicate events within this window are automatically suppressed.
+    </p>
+    <p>Events that appear duplicated may be legitimately distinct:</p>
+    <ul>
+      <li>
+        Rapid identical tool calls (e.g., two <code>Read</code> calls to the same file within
+        2 seconds with different tool_use_ids)
+      </li>
+      <li>Events from different agent_ids (main agent vs. subagent)</li>
+    </ul>
+    <p>
+      If true duplicates persist, verify that only one hook script is installed per event type in
+      <code>settings.json</code> (not both <code>send-event.py</code> and
+      <code>send-event-wsl.py</code>).
+    </p>
+
+    <h3 id="session-labels-show-hex">Session labels show hex instead of project name</h3>
+    <p>
+      <strong>Symptoms:</strong> Session labels display as <code>session:a3f7</code> instead of
+      <code>myproject:a3f7</code>.
+    </p>
+    <p>Session labels are generated by resolving the project name in this priority order:</p>
+    <ol>
+      <li>Git remote repository name (from <code>git remote get-url origin</code> in the session&rsquo;s cwd)</li>
+      <li><code>project_name</code> field from the first event payload</li>
+      <li>Last component of <code>cwd</code> from the first event payload</li>
+      <li>Fallback: <code>"session"</code></li>
+    </ol>
+    <p>
+      If labels show <code>session:xxxx</code>, it means the working directory is not a git
+      repository or the git remote is not configured. This is cosmetic only and does not affect
+      functionality.
+    </p>
+
+    <hr>
+
+    <h2 id="developer-support-section">Developer / Support Section</h2>
+    <p>For maintainers and support engineers debugging deeper issues.</p>
+
+    <h3 id="diagnostic-endpoints">Diagnostic Endpoints</h3>
+    <p>The server exposes several diagnostic endpoints (no authentication, localhost only):</p>
+    <table>
+      <thead>
+        <tr><th>Endpoint</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>GET /health</code></td><td>Returns <code>{"status":"ok"}</code> when server is running</td></tr>
+        <tr><td><code>GET /diag</code></td><td>Uptime, memory usage, event counts by env, session count, cache size</td></tr>
+        <tr><td><code>GET /api/db/stats</code></td><td>Database statistics: event count, session count, DB file size, schema version</td></tr>
+        <tr><td><code>GET /api/settings</code></td><td>All settings (sensitive values redacted to <code>{configured, prefix}</code>)</td></tr>
+        <tr><td><code>GET /api/version</code></td><td>Server version from package.json</td></tr>
+        <tr><td><code>GET /api/tokens</code></td><td>Per-session token summaries</td></tr>
+        <tr><td><code>GET /api/tokens/period</code></td><td>Today and month cost aggregates</td></tr>
+        <tr><td><code>GET /api/license</code></td><td>Current license tier and feature availability</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="database-inspection">Database Inspection</h3>
+    <p>Direct SQLite inspection for debugging:</p>
+    <pre><code># Open the database
+sqlite3 data/agent-recon.db
+
+# Check schema version
+PRAGMA user_version;
+
+# List tables
+.tables
+
+# View full schema for a table
+.schema events
+
+# Recent events
+SELECT id, session_id, hook_event, tool_name, received_at
+FROM events ORDER BY received_at DESC LIMIT 20;
+
+# Session labels
+SELECT session_id, session_label, history_status
+FROM sessions ORDER BY last_seen DESC LIMIT 10;
+
+# Settings (with encrypted values masked)
+SELECT key,
+  CASE WHEN value LIKE '$ENC$%' THEN '&lt;encrypted&gt;'
+       ELSE substr(value, 1, 50)
+  END AS value
+FROM settings;
+
+# Security chains
+SELECT chain_id, session_id, risk_level, is_final, chain_type
+FROM security_chains ORDER BY created_at DESC LIMIT 10;
+
+# LLM analysis costs
+SELECT module, model, SUM(input_tokens) as total_in,
+  SUM(output_tokens) as total_out, SUM(cost_usd) as total_cost
+FROM llm_analysis_usage GROUP BY module, model;</code></pre>
+
+    <h3 id="hook-verification">Hook Verification</h3>
+    <p>Verify that hooks are correctly installed and forwarding events:</p>
+    <ol>
+      <li>
+        <strong>Check settings.json:</strong>
+        <pre><code>cat ~/.claude/settings.json | python3 -m json.tool</code></pre>
+        <p>Confirm all 13 hook events are listed with the correct path to <code>send-event.py</code>.</p>
+      </li>
+      <li>
+        <strong>Test the hook script manually:</strong>
+        <pre><code>echo '{"session_id":"test","hook_event_name":"UserPromptSubmit","prompt":"hello"}' | \
+  python3 ~/.claude/hooks/send-event.py</code></pre>
+        <p>Check the server terminal for the received event.</p>
+      </li>
+      <li>
+        <strong>Verify hook script matches source:</strong>
+        <pre><code>sha256sum ~/.claude/hooks/send-event.py
+sha256sum /path/to/agent-recon/.claude/hooks/send-event.py</code></pre>
+        <p>If hashes differ, re-run the setup script.</p>
+      </li>
+    </ol>
+
+    <h3 id="common-development-issues">Common Development Issues</h3>
+
+    <h4 id="ntfs-path-performance">NTFS path performance for SQLite</h4>
+    <p>
+      SQLite on NTFS/DrvFs (Windows drives mounted in WSL) is significantly slower than on ext4.
+      Additionally, WAL mode is not supported on DrvFs because mmap is unavailable.
+      <code>start.js</code> detects this and automatically migrates the database to a WSL-native
+      path.
+    </p>
+    <p>For manual override, set <code>DB_PATH</code> to a WSL-native location:</p>
+    <pre><code>DB_PATH=/home/user/.agent-recon/agent-recon.db npm start</code></pre>
+
+    <h4 id="lf-line-endings-required">LF line endings required</h4>
+    <p>
+      Python hook scripts (<code>.py</code>) and bash setup scripts (<code>.sh</code>) must have
+      LF line endings. CRLF breaks the Python shebang line and bash
+      <code>set -euo pipefail</code>. If hooks fail silently after editing on Windows, check line
+      endings:
+    </p>
+    <pre><code>file ~/.claude/hooks/send-event.py
+# Should show: Python script, ASCII text executable
+# Bad: Python script, ASCII text executable, with CRLF line terminators</code></pre>
+
+    <h4 id="build-js-function-form-replacement">build.js function-form replacement</h4>
+    <p>
+      The build system uses <code>replace('{{JS}}', () =&gt; js)</code> with a function argument,
+      not a string. This is because the JavaScript source contains <code>$&amp;</code>,
+      <code>$'</code>, and similar sequences that would be interpreted as replacement patterns
+      with string form. Never change this &mdash; it will cause silent corruption of the built SPA.
+    </p>
+
+    <h4 id="start-js-binary-swap">start.js binary swap for cross-platform development</h4>
+    <p>
+      When switching between Windows/WSL/macOS terminals, <code>start.js</code> automatically
+      detects <code>better-sqlite3</code> binary mismatches and triggers
+      <code>npm rebuild</code>. The old binary is renamed (not deleted) because NTFS may lock the
+      file. This means you may see files like <code>better_sqlite3.node.win32</code> or
+      <code>better_sqlite3.node.linux</code> in the build directory &mdash; these are safe to
+      ignore.
+    </p>
+
+    <h3 id="debug-mode">Debug Mode</h3>
+    <p>Enable verbose logging by setting environment variables before starting the server:</p>
+    <pre><code># Show all DB queries
+DEBUG=db npm start
+
+# Show LLM API calls
+DEBUG=llm npm start
+
+# Show WebSocket message details
+DEBUG=ws npm start
+
+# Multiple debug channels
+DEBUG=db,llm,ws npm start</code></pre>
+
+    <h3 id="log-locations">Log Locations</h3>
+    <p>
+      Agent Recon does not write log files by default. All output goes to stdout/stderr of the
+      server process:
+    </p>
+    <ul>
+      <li>
+        <strong>Server logs:</strong> The terminal window where <code>npm start</code> was
+        executed. On Windows, this is typically a PowerShell window that stays open.
+      </li>
+      <li>
+        <strong>Frontend logs:</strong> Browser developer console (F12). The frontend logs
+        WebSocket connection state, event processing, and filter changes.
+      </li>
+      <li>
+        <strong>Hook script errors:</strong> Silently dropped by default (hooks must not block
+        Claude Code). To debug hook issues, run the hook script manually as shown in
+        <a href="#hook-verification">Hook Verification</a> above.
+      </li>
+    </ul>
+
+    <h3 id="process-monitor-debugging">Process Monitor Debugging</h3>
+    <p>
+      The process monitor (<code>process-monitor.js</code>) uses different mechanisms per platform:
+    </p>
+    <ul>
+      <li>
+        <strong>Linux/WSL:</strong> Polls <code>/proc</code> every 500ms. Check that
+        <code>/proc</code> is accessible and readable.
+      </li>
+      <li>
+        <strong>Windows:</strong> Polls via PowerShell <code>Get-WmiObject</code> every 2s.
+        Requires PowerShell to be available in PATH.
+      </li>
+    </ul>
+    <p>
+      If the process monitor is causing issues, disable it in Settings
+      (<code>process_monitor_enabled</code> = <code>false</code>).
+    </p>
+
+    <h3 id="otel-export-issues">OTEL Export Issues</h3>
+    <p>If events are not reaching your OTEL collector:</p>
+    <ol>
+      <li>Verify <code>otel_enabled</code> is <code>'true'</code> in Settings.</li>
+      <li>Check the <code>otel_endpoint</code> URL is correct (default: <code>http://localhost:4318</code>).</li>
+      <li>For authenticated collectors, verify <code>otel_auth_type</code> and credentials are set correctly.</li>
+      <li>Check the server terminal for OTLP export errors.</li>
+      <li>Verify the collector accepts OTLP/HTTP (JSON) on the configured endpoint.</li>
+    </ol>
+
+    <h3 id="tls-https-issues">TLS / HTTPS Issues</h3>
+
+    <h4 id="mkcert-not-found">mkcert not found</h4>
+    <p>
+      The server reports &ldquo;mkcert is not installed&rdquo; when attempting TLS setup. Install
+      mkcert for your platform (<code>brew install mkcert</code> on macOS,
+      <code>choco install mkcert</code> on Windows, <code>apt install mkcert</code> on
+      Linux/WSL), then run <code>mkcert -install</code> to create and trust the root CA.
+    </p>
+
+    <h4 id="elevation-required">Elevation required</h4>
+    <p>
+      <code>mkcert -install</code> needs admin/sudo privileges to install the root CA into the
+      system trust store. On macOS you will be prompted by Keychain Access. On Linux run
+      <code>sudo mkcert -install</code>. On Windows run the terminal as Administrator.
+    </p>
+
+    <h4 id="certificate-expired">Certificate expired</h4>
+    <p>
+      The server auto-regenerates certificates within 30 days of expiry on startup. If the
+      certificate has already expired, restart the server or run
+      <code>npx agent-recon tls setup</code> to regenerate immediately.
+    </p>
+
+    <h4 id="wsl-trust-store">WSL trust store</h4>
+    <p>
+      If browsers do not trust the certificate on WSL, ensure <code>mkcert -install</code> was
+      run from WSL (not native Windows). mkcert uses Windows interop to install the CA into the
+      Windows trust store, which is required for Windows-side browsers to accept the certificate.
+    </p>
+
+    <h4 id="custom-cert-errors">Custom cert errors</h4>
+    <p>
+      &ldquo;ENOENT&rdquo; or &ldquo;unable to read&rdquo; errors when using custom certificates.
+      Verify that the cert and key paths are absolute and that the files are PEM-encoded. Check
+      file permissions to ensure the Node process can read them.
+    </p>
+
+    <h4 id="port-conflict-on-3132">Port conflict on 3132</h4>
+    <p>
+      HTTPS defaults to port 3132. If another process is using that port, change it via the
+      <code>tls_https_port</code> setting in Settings, or set <code>TLS_PORT=&lt;port&gt;</code>
+      as an environment variable before starting the server.
+    </p>
+
+    <h3 id="telemetry-heartbeat">Telemetry Heartbeat</h3>
+    <p>
+      The server sends an optional privacy-respecting heartbeat containing only:
+      <code>{ install_id, version, platform, timestamp }</code>. No PII, session content, or
+      API keys.
+    </p>
+    <p>
+      To disable: set <code>telemetry_enabled</code> to <code>'false'</code> in Settings.
+      To verify status: <code>GET /api/telemetry/status</code> (not authenticated).
+    </p>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/eula.html">EULA</a>
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE">License</a>
+    </div>
+    <p>&copy; 2026 PNW Great Loop LLC. All rights reserved.</p>
+    <p>Agent Recon&trade; is a trademark of PNW Great Loop LLC.</p>
+    <div class="disclaimer">
+      Agent Recon is an independent product and is not affiliated with, endorsed by, or
+      sponsored by Anthropic, PBC. &ldquo;Claude&rdquo; and &ldquo;Claude Code&rdquo; are trademarks of Anthropic.
+      All other trademarks are the property of their respective owners.
+    </div>
+  </footer>
+
+</body>
+</html>

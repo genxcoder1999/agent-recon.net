@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Start - Agent Recon</title>
+  <meta name="description" content="Get started with Agent Recon in 60 seconds. Install via npm, configure hooks, and monitor your AI coding agent in real time.">
+  <link rel="canonical" href="https://www.agent-recon.net/docs/quick-start.html">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2129;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+    }
+
+    /* -- Nav ------------------------------------------------------------ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* -- Legal Content -------------------------------------------------- */
+    .legal-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .legal-content h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .legal-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .legal-content h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-content h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    .legal-content p {
+      margin-bottom: 12px;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .legal-content ul, .legal-content ol {
+      margin: 8px 0 16px 24px;
+      font-size: 15px;
+    }
+    .legal-content li {
+      margin-bottom: 4px;
+    }
+    .legal-content blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      margin: 16px 0;
+      background: var(--surface);
+      border-radius: 0 8px 8px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .legal-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+    .legal-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .legal-content th, .legal-content td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .legal-content th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    .legal-content td {
+      background: var(--surface2);
+    }
+    .legal-content pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 12px 0 16px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .legal-content pre code {
+      background: none;
+      padding: 0;
+      font-size: inherit;
+      color: var(--green);
+    }
+
+    /* -- Footer --------------------------------------------------------- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-links a { color: var(--muted); }
+    footer .footer-links a:hover { color: var(--text); }
+    .disclaimer {
+      max-width: 600px;
+      margin: 16px auto 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* -- Responsive ----------------------------------------------------- */
+    @media (max-width: 768px) {
+      .legal-content { padding: 32px 16px 60px; }
+      .legal-content h1 { font-size: 26px; }
+      .nav-links { gap: 16px; }
+      .legal-content table { font-size: 13px; }
+      .legal-content th, .legal-content td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-brand">Agent <span>Recon</span>&trade;</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="https://github.com/genxcoder1999/agent-recon" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="legal-content">
+    <h1>Agent Recon&trade;</h1>
+    <div class="legal-meta">
+      <strong>Real-time observability for AI coding agents.</strong>
+    </div>
+
+    <p>
+      Monitor every tool call, security event, token cost, and session in real time.
+      Know exactly what your AI agent is doing.
+    </p>
+    <p>
+      &rarr; <strong><a href="https://www.agent-recon.net">View landing page</a></strong> |
+      <strong><a href="../docs/install.html">Installation guide</a></strong> |
+      <strong><a href="https://www.agent-recon.net#pricing">Pricing</a></strong>
+    </p>
+
+    <h2 id="quick-start">Quick Start</h2>
+
+    <h3 id="option-a">Option A &mdash; Install via npm</h3>
+    <pre><code>npm install -g agent-recon
+agent-recon install</code></pre>
+    <p>
+      The guided installer detects your platform, registers hooks, and starts the server.
+      See <a href="../docs/install.html">INSTALL.md</a> for prerequisites, troubleshooting, and alternative methods.
+    </p>
+
+    <h3 id="option-b">Option B &mdash; From source</h3>
+    <pre><code>cd server &amp;&amp; npm install &amp;&amp; cd ..
+node server/start.js</code></pre>
+
+    <h3 id="open-dashboard">Open the dashboard</h3>
+    <p>Visit <strong>http://localhost:3131</strong> in your browser.</p>
+
+    <h3 id="start-claude-code">Start Claude Code</h3>
+    <p>
+      Run any <code>claude</code> command from this project directory. Hook events will stream to the dashboard instantly.
+    </p>
+
+    <hr>
+
+    <h2 id="how-it-works">How It Works</h2>
+    <pre><code>Claude Code Agent(s)
+     |  hook fires &rarr; stdin JSON
+     v
+.claude/hooks/send-event.py  --HTTP POST--&gt;  server/server.js (port 3131)
+                                                      |
+                                              WebSocket broadcast
+                                                      v
+                                           public/index.html (browser)
+                                         icons &middot; sounds &middot; live feed</code></pre>
+    <p>
+      Every hook registered in <code>.claude/settings.json</code> is wired to <code>send-event.py</code>,
+      which runs asynchronously (never blocking Claude) and forwards the payload to the local server.
+      The server stores up to 1&nbsp;000 events in memory and fans them out to every connected browser tab
+      via WebSocket. Late-joining tabs receive the full event history on connect.
+    </p>
+
+    <hr>
+
+    <h2 id="event-categories">Event Categories &amp; Sounds</h2>
+    <table>
+      <thead>
+        <tr><th>Icon</th><th>Category</th><th>Hook Events</th><th>Sound</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>&#x1F680;</td><td>Session</td><td>SessionStart, SessionEnd</td><td>Rising arpeggio / falling tone</td></tr>
+        <tr><td>&#x1F4AC;</td><td>Prompt</td><td>UserPromptSubmit</td><td>Soft ping</td></tr>
+        <tr><td>&#x26A1;</td><td>Bash</td><td>PreToolUse (Bash)</td><td>Quick click</td></tr>
+        <tr><td>&#x270D;&#xFE0F;</td><td>Write</td><td>PreToolUse (Write)</td><td>Soft click</td></tr>
+        <tr><td>&#x270F;&#xFE0F;</td><td>Edit</td><td>PreToolUse (Edit/MultiEdit)</td><td>Soft click</td></tr>
+        <tr><td>&#x1F441;</td><td>Read</td><td>PreToolUse (Read)</td><td>Soft click</td></tr>
+        <tr><td>&#x1F50D;</td><td>Search</td><td>PreToolUse (Glob/Grep)</td><td>Soft click</td></tr>
+        <tr><td>&#x1F310;</td><td>Web</td><td>PreToolUse (WebFetch/WebSearch)</td><td>Soft click</td></tr>
+        <tr><td>&#x1F527;</td><td>Tool</td><td>PreToolUse (other)</td><td>Soft click</td></tr>
+        <tr><td>&#x2705;</td><td>Done</td><td>PostToolUse</td><td>Short positive beep</td></tr>
+        <tr><td>&#x274C;</td><td>Failure</td><td>PostToolUseFailure</td><td>Low buzz</td></tr>
+        <tr><td>&#x1F916;</td><td>Subagent</td><td>SubagentStart, SubagentStop</td><td>Spawn/resolve chime</td></tr>
+        <tr><td>&#x1F514;</td><td>Notify</td><td>Notification</td><td>Bell tone</td></tr>
+        <tr><td>&#x1F3C6;</td><td>Complete</td><td>Stop, TaskCompleted</td><td>Success chord</td></tr>
+        <tr><td>&#x26A0;&#xFE0F;</td><td>Idle</td><td>TeammateIdle</td><td>Pulsed alert</td></tr>
+        <tr><td>&#x1F5DC;&#xFE0F;</td><td>Compact</td><td>PreCompact</td><td>Soft tone</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <h2 id="dashboard-features">Dashboard Features</h2>
+    <ul>
+      <li><strong>Timeline view</strong> &mdash; chronological feed, newest at top with slide-in animation</li>
+      <li><strong>Swimlane view</strong> &mdash; one column per <code>session_id</code> for multi-agent observation</li>
+      <li><strong>Category filter</strong> &mdash; click any badge in the stats bar to isolate a category</li>
+      <li><strong>Session filter</strong> &mdash; dropdown to focus on a single agent session</li>
+      <li><strong>Sound controls</strong> &mdash; mute toggle + volume slider; all tones synthesized via Web Audio API (no audio files)</li>
+      <li><strong>Expandable cards</strong> &mdash; click any card to reveal the full raw JSON payload</li>
+      <li><strong>Auto-reconnect</strong> &mdash; dashboard reconnects automatically if the server restarts</li>
+      <li><strong>History on join</strong> &mdash; opening a new tab replays all stored events immediately</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="windows-notes">Windows Notes</h2>
+    <p>The hook command in <code>.claude/settings.json</code> is:</p>
+    <pre><code>python .claude/hooks/send-event.py</code></pre>
+    <p>
+      If <code>python</code> is not on your PATH, replace it with the full path to your Python 3 executable, e.g.:
+    </p>
+    <pre><code>C:\Python312\python.exe .claude/hooks/send-event.py</code></pre>
+    <p>The forwarder uses only Python standard library modules &mdash; no <code>pip install</code> required.</p>
+
+    <hr>
+
+    <h2 id="wsl-tmux-support">WSL + tmux Support</h2>
+    <p>
+      Claude Code running inside WSL (including inside a <strong>tmux</strong> session) can stream events to the same dashboard.
+    </p>
+
+    <h3 id="how-it-works-wsl">How it works</h3>
+    <pre><code>WSL tmux session
+  Claude Code Agent
+       |  hook fires &rarr; stdin JSON
+       v
+~/.claude/hooks/send-event-wsl.py  --HTTP POST--&gt;  Windows host IP:3131
+                                                          |
+                                                  (same server.js)
+                                                          v
+                                               browser dashboard</code></pre>
+    <p>
+      Events from WSL show a green <strong>WSL</strong> badge in the dashboard so you can distinguish them from Windows-side sessions.
+    </p>
+
+    <h3 id="wsl-quick-setup">Quick Setup</h3>
+    <p><strong>1 &mdash; On Windows</strong>, start the Agent Recon&trade; server as usual:</p>
+    <pre><code>cd C:\ProjectGreatLoop\agent-recon\server
+node start.js</code></pre>
+
+    <p><strong>2 &mdash; Inside WSL</strong>, run the setup script once:</p>
+    <pre><code>bash /mnt/c/ProjectGreatLoop/agent-recon/setup-wsl.sh</code></pre>
+    <p>This script:</p>
+    <ul>
+      <li>Copies <code>send-event-wsl.py</code> to <code>~/.claude/hooks/</code></li>
+      <li>Creates <code>~/.claude/settings.json</code> with all 13 hook registrations</li>
+      <li>Verifies the Windows host is reachable</li>
+    </ul>
+
+    <p><strong>3 &mdash; Start Claude</strong> in any WSL directory (plain shell or tmux):</p>
+    <pre><code>tmux new-session -s work
+claude</code></pre>
+    <p>Events will stream to <code>http://localhost:3131</code> on Windows immediately.</p>
+
+    <h3 id="wsl-host-detection">How the WSL forwarder finds the Windows host</h3>
+    <p>
+      It reads the <code>nameserver</code> from <code>/etc/resolv.conf</code> (the WSL2 virtual gateway).
+      If that fails it falls back to <code>ip route show default</code>. The server accepts connections
+      from all RFC 1918 private ranges (10.x, 172.16-31.x, 192.168.x) in addition to loopback.
+    </p>
+
+    <hr>
+
+    <h2 id="file-structure">File Structure</h2>
+    <pre><code>├── .claude/
+│   ├── hooks/
+│   │   ├── send-event.py          # Windows hook forwarder (stdlib only)
+│   │   └── send-event-wsl.py      # WSL hook forwarder (auto-detects host IP)
+│   └── settings.json              # Hook registrations for Windows Claude
+├── server/
+│   ├── package.json
+│   └── server.js                  # Express HTTP + WebSocket server (port 3131)
+├── public/
+│   └── index.html                 # Single-file dashboard SPA
+├── setup-wsl.sh                   # One-time WSL setup script
+└── README.md</code></pre>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms of Service</a>
+      <a href="../eula.html">EULA</a>
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE">License</a>
+    </div>
+    <p>&copy; 2026 PNW Great Loop LLC. All rights reserved.</p>
+    <p>Agent Recon&trade; is a trademark of PNW Great Loop LLC.</p>
+    <div class="disclaimer">
+      Agent Recon is an independent product and is not affiliated with, endorsed by, or
+      sponsored by Anthropic, PBC. &ldquo;Claude&rdquo; and &ldquo;Claude Code&rdquo; are trademarks of Anthropic.
+      All other trademarks are the property of their respective owners.
+    </div>
+  </footer>
+
+</body>
+</html>

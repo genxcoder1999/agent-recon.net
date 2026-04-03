@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation Guide - Agent Recon</title>
+  <meta name="description" content="Install Agent Recon on Windows, macOS, Linux, or WSL. Covers npm installation, TLS setup, CLI commands, upgrading, and troubleshooting common issues.">
+  <link rel="canonical" href="https://www.agent-recon.net/docs/install.html">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #1c2129;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+    }
+
+    /* -- Nav ------------------------------------------------------------ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* -- Legal Content -------------------------------------------------- */
+    .legal-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .legal-content h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .legal-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .legal-content h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-content h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    .legal-content p {
+      margin-bottom: 12px;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .legal-content ul, .legal-content ol {
+      margin: 8px 0 16px 24px;
+      font-size: 15px;
+    }
+    .legal-content li {
+      margin-bottom: 4px;
+    }
+    .legal-content blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      margin: 16px 0;
+      background: var(--surface);
+      border-radius: 0 8px 8px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .legal-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+    .legal-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .legal-content th, .legal-content td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .legal-content th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    .legal-content td {
+      background: var(--surface2);
+    }
+    .legal-content pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 12px 0 16px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .legal-content pre code {
+      background: none;
+      padding: 0;
+      font-size: inherit;
+      color: var(--green);
+    }
+
+    /* -- Footer --------------------------------------------------------- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    footer .footer-links a { color: var(--muted); }
+    footer .footer-links a:hover { color: var(--text); }
+    .disclaimer {
+      max-width: 600px;
+      margin: 16px auto 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* -- Responsive ----------------------------------------------------- */
+    @media (max-width: 768px) {
+      .legal-content { padding: 32px 16px 60px; }
+      .legal-content h1 { font-size: 26px; }
+      .nav-links { gap: 16px; }
+      .legal-content table { font-size: 13px; }
+      .legal-content th, .legal-content td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-brand">Agent <span>Recon</span>&trade;</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="https://github.com/genxcoder1999/agent-recon" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="legal-content">
+    <h1>Installing Agent Recon</h1>
+    <div class="legal-meta">
+      <strong>Platforms:</strong> Windows &middot; macOS &middot; Linux &middot; WSL
+    </div>
+
+    <h2 id="prerequisites">Prerequisites</h2>
+    <ul>
+      <li><strong>Node.js &gt;= 18</strong> &mdash; <a href="https://nodejs.org/">nodejs.org</a></li>
+      <li><strong>Python 3</strong> &mdash; Required for hook scripts (<a href="https://www.python.org/">python.org</a>)</li>
+      <li><strong>C/C++ build tools</strong> &mdash; Required to compile the <code>better-sqlite3</code> native addon:
+        <ul>
+          <li><strong>Windows:</strong> <code>npm install -g windows-build-tools</code> or install Visual Studio Build Tools</li>
+          <li><strong>macOS:</strong> <code>xcode-select --install</code></li>
+          <li><strong>Linux (Debian/Ubuntu):</strong> <code>sudo apt install build-essential python3</code></li>
+          <li><strong>Linux (Fedora/RHEL):</strong> <code>sudo dnf groupinstall "Development Tools"</code></li>
+          <li><strong>Linux (Arch):</strong> <code>sudo pacman -S base-devel</code></li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2 id="npm-recommended">npm (Recommended)</h2>
+    <pre><code>npm install -g agent-recon</code></pre>
+    <p>Then run the guided installer:</p>
+    <pre><code>agent-recon install</code></pre>
+    <p>The installer will:</p>
+    <ol>
+      <li>Detect your platform and existing configuration</li>
+      <li>Copy hook scripts to your Claude Code hooks directory</li>
+      <li>Register 13 lifecycle events in Claude Code settings</li>
+      <li>Optionally configure LLM API keys for analysis features</li>
+      <li>Optionally set up an auto-start service (systemd / launchd / Windows Service)</li>
+      <li>Verify the server starts and responds</li>
+    </ol>
+
+    <h2 id="from-source">From Source</h2>
+    <pre><code>git clone &lt;repository-url&gt;
+cd agent-recon
+
+# Install server dependencies
+cd server &amp;&amp; npm install &amp;&amp; cd ..
+
+# Install installer dependencies
+cd installer &amp;&amp; npm install &amp;&amp; cd ..
+
+# Run the guided installer
+node installer/cli.js install
+
+# Or start the server manually
+node server/start.js</code></pre>
+
+    <h2 id="upgrading">Upgrading</h2>
+    <pre><code># If installed via npm
+npm update -g agent-recon
+agent-recon upgrade
+
+# If installed from source
+git pull
+agent-recon upgrade
+# or: node installer/cli.js upgrade</code></pre>
+
+    <h2 id="uninstalling">Uninstalling</h2>
+    <pre><code>agent-recon uninstall</code></pre>
+    <p>
+      This removes hooks from Claude Code settings, stops any auto-start service, and optionally
+      deletes the database and stored credentials. The source directory is never deleted.
+    </p>
+    <p>To also remove the npm package:</p>
+    <pre><code>npm uninstall -g agent-recon</code></pre>
+
+    <h2 id="cli-commands">CLI Commands</h2>
+    <pre><code>agent-recon install      # Guided installation (default)
+agent-recon upgrade      # Upgrade existing installation
+agent-recon uninstall    # Remove Agent Recon
+agent-recon detect       # Print environment detection report
+agent-recon --help       # Show help
+agent-recon --version    # Show version</code></pre>
+
+    <h2 id="platform-package-managers">Platform Package Managers</h2>
+
+    <h3 id="homebrew">Homebrew (macOS / Linux) &mdash; Coming Soon</h3>
+    <p>A Homebrew formula is planned for a future release. In the meantime, use npm.</p>
+
+    <h3 id="scoop">Scoop (Windows) &mdash; Coming Soon</h3>
+    <p>A Scoop manifest is planned for a future release. In the meantime, use npm.</p>
+
+    <h2 id="tls-https-setup">TLS / HTTPS Setup</h2>
+    <p>
+      Agent Recon supports browser-trusted HTTPS via
+      <a href="https://github.com/FiloSottile/mkcert">mkcert</a>, eliminating &ldquo;Not Secure&rdquo;
+      browser warnings without self-signed certificate interstitials.
+    </p>
+
+    <h3 id="tls-prerequisites">Prerequisites</h3>
+    <p>Install mkcert for your platform:</p>
+    <table>
+      <thead>
+        <tr><th>Platform</th><th>Command</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>macOS</td><td><code>brew install mkcert</code></td></tr>
+        <tr><td>Windows</td><td><code>choco install mkcert</code></td></tr>
+        <tr><td>Linux / WSL</td><td><code>apt install mkcert</code> or <code>brew install mkcert</code></td></tr>
+      </tbody>
+    </table>
+    <p>Then run the one-time CA installation (requires admin/sudo):</p>
+    <pre><code>mkcert -install</code></pre>
+
+    <h3 id="enable-tls-during-install">Enable TLS during install</h3>
+    <pre><code>npx agent-recon install --tls</code></pre>
+    <p>
+      This pre-selects the mkcert option in the guided installer. You can also choose TLS
+      interactively during a normal <code>npx agent-recon install</code>.
+    </p>
+
+    <h3 id="enable-tls-on-existing-installation">Enable TLS on an existing installation</h3>
+    <pre><code>npx agent-recon tls setup     # configure mkcert TLS via server API
+npx agent-recon tls status    # check current TLS status
+npx agent-recon upgrade --tls # add TLS during upgrade</code></pre>
+    <p>
+      After enabling TLS, restart the server. The dashboard will be available at
+      <code>https://localhost:3132</code> with a green padlock.
+    </p>
+
+    <h3 id="wsl-note">WSL note</h3>
+    <p>
+      On WSL2, mkcert installs the CA into the Windows trust store via interop. Both Windows
+      browsers and WSL-side <code>curl</code> will trust the certificate. Ensure
+      <code>mkcert -install</code> is run from WSL (it automatically uses the Windows
+      <code>certutil</code> via <code>/mnt/c/</code>).
+    </p>
+
+    <h3 id="custom-certificates">Custom certificates</h3>
+    <p>
+      For CA-signed or enterprise certificates, choose &ldquo;Custom certificate&rdquo; during install
+      or set the paths in Settings. Provide PEM-encoded cert and key file paths.
+    </p>
+
+    <h2 id="verifying-installation">Verifying Installation</h2>
+    <pre><code># Check environment detection
+agent-recon detect
+
+# Check server health (server must be running)
+curl http://localhost:3131/health</code></pre>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <h3 id="better-sqlite3-build-failure"><code>better-sqlite3</code> build failure</h3>
+    <p>This native addon must compile C++ code during installation. If it fails:</p>
+    <ol>
+      <li>Ensure C/C++ build tools are installed (see Prerequisites above)</li>
+      <li>Try rebuilding manually: <code>cd server &amp;&amp; npm rebuild better-sqlite3</code></li>
+      <li>On WSL, ensure you are on a native ext4 filesystem, not an NTFS mount (<code>/mnt/c/...</code>)</li>
+    </ol>
+
+    <h3 id="python-not-found">Python not found</h3>
+    <p>
+      Hook scripts require Python 3. The installer checks for <code>python3</code> and
+      <code>python</code> in your PATH.
+    </p>
+    <ul>
+      <li><strong>Windows:</strong> Install from <a href="https://www.python.org/">python.org</a> and ensure &ldquo;Add to PATH&rdquo; is checked</li>
+      <li><strong>macOS:</strong> <code>brew install python</code> or use the system Python 3</li>
+      <li><strong>Linux:</strong> <code>sudo apt install python3</code> (Debian/Ubuntu) or <code>sudo dnf install python3</code> (Fedora)</li>
+    </ul>
+
+    <h3 id="permission-errors-on-global-install">Permission errors on global install</h3>
+    <p>If <code>npm install -g</code> fails with permission errors:</p>
+    <ul>
+      <li><strong>Recommended:</strong> Configure npm to use a user directory:
+        <pre><code>mkdir -p ~/.npm-global
+npm config set prefix '~/.npm-global'
+# Add to ~/.bashrc or ~/.zshrc:
+export PATH="$HOME/.npm-global/bin:$PATH"</code></pre>
+      </li>
+      <li><strong>Not recommended:</strong> <code>sudo npm install -g agent-recon</code> (avoid running npm as root)</li>
+    </ul>
+
+    <h3 id="server-wont-start">Server won&rsquo;t start</h3>
+    <ol>
+      <li>Check that port 3131 is available: <code>lsof -i :3131</code> (macOS/Linux) or <code>netstat -ano | findstr 3131</code> (Windows)</li>
+      <li>Ensure the database directory is writable: <code>ls -la data/</code></li>
+      <li>Check logs: set <code>AGENT_RECON_DEBUG=1</code> before starting</li>
+    </ol>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="eula.html">EULA</a>
+      <a href="https://github.com/genxcoder1999/agent-recon/blob/main/LICENSE">License</a>
+    </div>
+    <p>&copy; 2026 PNW Great Loop LLC. All rights reserved.</p>
+    <p>Agent Recon&trade; is a trademark of PNW Great Loop LLC.</p>
+    <div class="disclaimer">
+      Agent Recon is an independent product and is not affiliated with, endorsed by, or
+      sponsored by Anthropic, PBC. &ldquo;Claude&rdquo; and &ldquo;Claude Code&rdquo; are trademarks of Anthropic.
+      All other trademarks are the property of their respective owners.
+    </div>
+  </footer>
+
+</body>
+</html>
