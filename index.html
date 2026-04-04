@@ -170,36 +170,6 @@
     .feature-card p { color: var(--muted); font-size: 14px; }
 
     /* ── Pricing ──────────────────────────────────────────────────────── */
-    .billing-toggle {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 36px;
-      align-items: center;
-    }
-    .billing-toggle span { color: var(--muted); font-size: 14px; }
-    .billing-toggle .active { color: var(--text); font-weight: 600; }
-    .toggle-track {
-      width: 44px;
-      height: 24px;
-      background: var(--border);
-      border-radius: 12px;
-      position: relative;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .toggle-track.on { background: var(--accent); }
-    .toggle-knob {
-      width: 20px;
-      height: 20px;
-      background: #fff;
-      border-radius: 50%;
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      transition: left 0.2s;
-    }
-    .toggle-track.on .toggle-knob { left: 22px; }
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -441,14 +411,6 @@
       You supply your own API keys &mdash; zero marginal cost to us.
     </p>
 
-    <div class="billing-toggle">
-      <span id="monthlyLabel">Monthly</span>
-      <div class="toggle-track on" id="billingToggle" role="switch" aria-checked="true" tabindex="0">
-        <div class="toggle-knob"></div>
-      </div>
-      <span id="annualLabel" class="active">Annual <span style="color:var(--green);font-size:12px">(save up to 30%)</span></span>
-    </div>
-
     <div class="pricing-grid">
       <!-- Community -->
       <div class="price-card">
@@ -475,8 +437,8 @@
         <div class="badge">Most Popular</div>
         <h3>Personal</h3>
         <div class="desc">Full-featured for individual developers. Purchase with personal funds.</div>
-        <div class="price" data-monthly="$9.99" data-annual="$7.00">$7.00 <span class="period">/month</span></div>
-        <div class="price-annual" data-monthly="billed monthly" data-annual="$84/year (save 30%)">$84/year (save 30%)</div>
+        <div class="price">$9.99 <span class="period">/month</span></div>
+        <div class="price-annual">annual plans available at checkout</div>
         <ul>
           <li>Everything in Community</li>
           <li>LLM security chain analysis</li>
@@ -487,15 +449,15 @@
           <li>90-day configurable retention</li>
           <li>OTEL export, encrypted archives</li>
         </ul>
-        <a href="https://agentrecon.lemonsqueezy.com/checkout/buy/fee0d61f-3dc9-434f-b152-c291d7a20a30" class="btn btn-primary" id="personalCheckout" data-monthly="https://agentrecon.lemonsqueezy.com/checkout/buy/fb5d9d39-5fd0-4e81-9b2f-d4ee81b9cd7b" data-annual="https://agentrecon.lemonsqueezy.com/checkout/buy/fee0d61f-3dc9-434f-b152-c291d7a20a30">Subscribe</a>
+        <a href="https://agentrecon.lemonsqueezy.com/checkout/buy/fb5d9d39-5fd0-4e81-9b2f-d4ee81b9cd7b" class="btn btn-primary" id="personalCheckout">Subscribe</a>
       </div>
 
       <!-- Professional -->
       <div class="price-card">
         <h3>Professional</h3>
         <div class="desc">For developers in a company context. Includes invoice billing.</div>
-        <div class="price" data-monthly="$29.99" data-annual="$23.25">$23.25 <span class="period">/month</span></div>
-        <div class="price-annual" data-monthly="billed monthly" data-annual="$279/year (save 20%)">$279/year (save 20%)</div>
+        <div class="price">$29.99 <span class="period">/month</span></div>
+        <div class="price-annual">annual plans available at checkout</div>
         <ul>
           <li>Everything in Personal</li>
           <li>Use in employment context</li>
@@ -504,7 +466,7 @@
           <li>Multi-environment support</li>
           <li>Same features, different terms</li>
         </ul>
-        <a href="https://agentrecon.lemonsqueezy.com/checkout/buy/2f1c7a09-f5b9-4c82-9843-59f47bef37c2" class="btn btn-secondary" id="professionalCheckout" data-monthly="https://agentrecon.lemonsqueezy.com/checkout/buy/437f5c88-95ff-4abc-b9ed-4d08d4c4c506" data-annual="https://agentrecon.lemonsqueezy.com/checkout/buy/2f1c7a09-f5b9-4c82-9843-59f47bef37c2">Subscribe</a>
+        <a href="https://agentrecon.lemonsqueezy.com/checkout/buy/437f5c88-95ff-4abc-b9ed-4d08d4c4c506" class="btn btn-secondary" id="professionalCheckout">Subscribe</a>
       </div>
     </div>
   </section>
@@ -608,34 +570,6 @@
     </div>
   </footer>
 
-  <script>
-    // Billing toggle (annual ↔ monthly)
-    const toggle = document.getElementById('billingToggle');
-    const monthlyLabel = document.getElementById('monthlyLabel');
-    const annualLabel = document.getElementById('annualLabel');
-    let isAnnual = true;
-
-    function updatePricing() {
-      const mode = isAnnual ? 'annual' : 'monthly';
-      toggle.classList.toggle('on', isAnnual);
-      monthlyLabel.classList.toggle('active', !isAnnual);
-      annualLabel.classList.toggle('active', isAnnual);
-      document.querySelectorAll('.price[data-monthly]').forEach(el => {
-        el.innerHTML = el.getAttribute('data-' + mode) + ' <span class="period">/month</span>';
-      });
-      document.querySelectorAll('.price-annual[data-monthly]').forEach(el => {
-        el.textContent = el.getAttribute('data-' + mode);
-      });
-      document.querySelectorAll('a[data-monthly][data-annual]').forEach(el => {
-        el.href = el.getAttribute('data-' + mode);
-      });
-    }
-
-    toggle.addEventListener('click', () => { isAnnual = !isAnnual; updatePricing(); });
-    toggle.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); isAnnual = !isAnnual; updatePricing(); }
-    });
-  </script>
 
 </body>
 </html>
