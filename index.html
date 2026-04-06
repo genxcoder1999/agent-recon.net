@@ -324,6 +324,62 @@
       line-height: 1.6;
     }
 
+    /* ── Demo Video ────────────────────────────────────────────────────── */
+    .demo-section { text-align: center; }
+    .video-wrapper {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .video-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .video-wrapper .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      background: rgba(124, 58, 237, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .video-wrapper:hover .play-btn {
+      background: rgba(124, 58, 237, 1);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    .play-btn::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 12px 0 12px 22px;
+      border-color: transparent transparent transparent #fff;
+      margin-left: 4px;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
     /* ── Responsive ────────────────────────────────────────────────────── */
     @media (max-width: 768px) {
       .hero h1 { font-size: 32px; }
@@ -340,6 +396,7 @@
   <nav>
     <div class="nav-brand">Agent <span>Recon</span>&trade;</div>
     <div class="nav-links">
+      <a href="#demo">Demo</a>
       <a href="#features">Features</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
@@ -361,6 +418,27 @@
     </div>
     <div class="install-cmd">npm install -g agent-recon</div>
   </div>
+
+  <!-- Demo -->
+  <section id="demo" class="demo-section">
+    <h2>See it in action</h2>
+    <p class="section-sub">Watch Agent Recon&trade; monitor a live Claude Code session in real time.</p>
+    <div class="video-wrapper" id="demoVideo" role="button" tabindex="0" aria-label="Play demo video">
+      <img src="https://img.youtube.com/vi/wWW6CAPZSz4/maxresdefault.jpg" alt="Agent Recon demo video thumbnail" width="800" height="450">
+      <div class="play-btn"></div>
+    </div>
+  </section>
+  <script>
+    (function() {
+      var w = document.getElementById('demoVideo');
+      function load() {
+        w.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/wWW6CAPZSz4?autoplay=1" title="Agent Recon demo video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        w.style.cursor = 'default';
+      }
+      w.addEventListener('click', load);
+      w.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); load(); } });
+    })();
+  </script>
 
   <!-- Features -->
   <section id="features">
