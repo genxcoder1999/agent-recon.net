@@ -151,15 +151,14 @@
       margin-bottom: 12px;
     }
     .prereq-items { font-size: 15px; margin-bottom: 12px; }
-    .prereq-win {
+    .prereq-platform {
       font-size: 14px;
       color: var(--muted);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       line-height: 1.7;
     }
-    .win-badge {
+    .platform-badge {
       display: inline-block;
-      background: var(--blue);
       color: #fff;
       font-size: 11px;
       font-weight: 600;
@@ -168,6 +167,9 @@
       vertical-align: middle;
       margin-right: 4px;
     }
+    .platform-badge--win { background: var(--blue); }
+    .platform-badge--mac { background: var(--muted); }
+    .platform-badge--linux { background: var(--yellow); }
     .prereq-note { font-size: 13px; color: var(--muted); }
 
     /* ── Sections ──────────────────────────────────────────────────────── */
@@ -662,10 +664,18 @@
           <a href="https://nodejs.org/">Node.js 22+</a> &middot;
           <a href="https://www.python.org/">Python 3</a>
         </div>
-        <div class="prereq-win">
-          <span class="win-badge">Windows</span>
+        <div class="prereq-platform">
+          <span class="platform-badge platform-badge--win">Windows</span>
           Install Claude Code first &middot;
           Run <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> in PowerShell
+        </div>
+        <div class="prereq-platform">
+          <span class="platform-badge platform-badge--mac">macOS</span>
+          Run <code>xcode-select --install</code> if prompted (required for native modules)
+        </div>
+        <div class="prereq-platform">
+          <span class="platform-badge platform-badge--linux">Linux</span>
+          Use <a href="https://github.com/nvm-sh/nvm">nvm</a> for Node.js 22+ &mdash; <code>apt</code> packages are too old
         </div>
         <div class="prereq-note">
           Restart your terminal after installing prerequisites.
