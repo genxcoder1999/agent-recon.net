@@ -228,13 +228,17 @@
     <ol>
       <li>
         <strong>Verify hook installation.</strong> Claude Code must have <code>send-event.py</code>
-        (or <code>send-event-wsl.py</code> on WSL) registered for all 13 hook events in
+        (or <code>send-event-wsl.py</code> on WSL) registered for all 25 hook events in
         <code>~/.claude/settings.json</code>:
         <pre><code>{
   "hooks": {
-    "PreToolUse":          [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "PostToolUse":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "PostToolUseFailure":  [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "PreToolUse":          [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
+    "PostToolUse":         [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
+    "PostToolUseFailure":  [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
+    "Notification":        [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
+    "PreCompact":          [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
+    "PermissionRequest":   [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
+    "Elicitation":         [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
     "UserPromptSubmit":    [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
     "Stop":                [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
     "SessionStart":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
@@ -242,9 +246,17 @@
     "SubagentStart":       [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
     "SubagentStop":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
     "TaskCompleted":       [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "Notification":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "PreCompact":          [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "TeammateIdle":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }]
+    "TeammateIdle":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "StopFailure":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "PostCompact":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "InstructionsLoaded":  [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "ConfigChange":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "CwdChanged":          [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "FileChanged":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "WorktreeCreate":      [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "WorktreeRemove":      [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "TaskCreated":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
+    "ElicitationResult":   [{ "type": "command", "command": "python3 /path/to/send-event.py" }]
   }
 }</code></pre>
         <p>
@@ -431,6 +443,74 @@
       <code>send-event-wsl.py</code>).
     </p>
 
+    <h3 id="windows-specific-issues">Windows-Specific Issues</h3>
+    <p>
+      <strong>Python opens Microsoft Store instead of running:</strong>
+      Fresh Windows 11 installs ship a <code>python.exe</code> alias that opens the Microsoft Store.
+      Disable it in <strong>Settings &rarr; Apps &rarr; App execution aliases</strong> (turn off
+      &ldquo;python.exe&rdquo; and &ldquo;python3.exe&rdquo;), then install Python from
+      <a href="https://www.python.org/">python.org</a>.
+    </p>
+    <p>
+      <strong>ExecutionPolicy blocks npm scripts:</strong>
+      The default <code>Restricted</code> policy prevents <code>npm.ps1</code> from running. Fix:
+    </p>
+    <pre><code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre>
+    <p>
+      <strong>Node.js blocked by Windows Firewall:</strong>
+      Windows Defender blocks inbound connections to <code>node.exe</code> on dynamic ports. Allow
+      access for private networks when prompted, or create a manual firewall rule in
+      <strong>Windows Security &rarr; Firewall &amp; network protection &rarr; Allow an app through
+      firewall</strong>.
+    </p>
+    <p>
+      <strong>PATH not updated after installing prerequisites:</strong>
+      Tools installed via winget or standalone installers add to PATH, but existing terminal sessions
+      may not see the change. Close and reopen your terminal, or start a new PowerShell window.
+    </p>
+    <p>
+      <strong>Installation order matters:</strong>
+      Install Claude Code first and run it at least once (to create
+      <code>~/.claude/settings.json</code>). Then install Agent Recon. The installer merges hooks
+      into the existing settings file.
+    </p>
+
+    <h3 id="eacces-on-global-install">EACCES on global install</h3>
+    <p>
+      If <code>sudo npm install -g agent-recon</code> was used and the server crashes with:
+    </p>
+    <pre><code>Error: EACCES: permission denied, mkdir '...data'</code></pre>
+    <p>
+      The data directory resolved to a root-owned location
+      (<code>/usr/lib/node_modules/agent-recon/data/</code>). As of v1.0.3, the server uses
+      platform-specific user-writable directories:
+    </p>
+    <table>
+      <thead>
+        <tr><th>Platform</th><th>Default path</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Linux / WSL</td><td><code>~/.config/agent-recon/data/</code></td></tr>
+        <tr><td>macOS</td><td><code>~/Library/Application Support/agent-recon/data/</code></td></tr>
+        <tr><td>Windows</td><td><code>%APPDATA%\agent-recon\data\</code></td></tr>
+      </tbody>
+    </table>
+    <p>Upgrade to v1.0.3+ to resolve. As a workaround, set <code>AGENT_RECON_DATA_DIR</code>:</p>
+    <pre><code>AGENT_RECON_DATA_DIR=~/.config/agent-recon/data agent-recon start</code></pre>
+
+    <h3 id="credential-storage-headless-linux">Credential storage on headless Linux / SSH</h3>
+    <p>
+      On headless Linux servers or SSH sessions, <code>libsecret</code> requires a D-Bus session and
+      unlocked keyring, which are typically unavailable. The server falls back to PBKDF2 file-based
+      encryption automatically.
+    </p>
+    <p>If you see credential-related errors, set a master key explicitly:</p>
+    <pre><code>export AGENT_RECON_MASTER_KEY=$(openssl rand -hex 32)
+agent-recon start</code></pre>
+    <p>
+      Store the key securely &mdash; it is needed to decrypt any previously encrypted API keys.
+    </p>
+
     <h3 id="session-labels-show-hex">Session labels show hex instead of project name</h3>
     <p>
       <strong>Symptoms:</strong> Session labels display as <code>session:a3f7</code> instead of
@@ -516,7 +596,7 @@ FROM llm_analysis_usage GROUP BY module, model;</code></pre>
       <li>
         <strong>Check settings.json:</strong>
         <pre><code>cat ~/.claude/settings.json | python3 -m json.tool</code></pre>
-        <p>Confirm all 13 hook events are listed with the correct path to <code>send-event.py</code>.</p>
+        <p>Confirm all 25 hook events are listed with the correct path to <code>send-event.py</code>.</p>
       </li>
       <li>
         <strong>Test the hook script manually:</strong>

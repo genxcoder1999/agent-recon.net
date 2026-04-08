@@ -220,6 +220,12 @@
 
     <h2 id="quick-start">Quick Start</h2>
 
+    <blockquote>
+      <strong>Windows users:</strong> Install Claude Code before Agent Recon. See the
+      <a href="install.html#prerequisites">installation guide</a> for Windows-specific prerequisites
+      (ExecutionPolicy, Python Store alias, firewall).
+    </blockquote>
+
     <h3 id="option-a">Option A &mdash; Install via npm</h3>
     <pre><code>npm install -g agent-recon
 agent-recon install</code></pre>
@@ -310,6 +316,13 @@ node server/start.js</code></pre>
     </p>
     <pre><code>C:\Python312\python.exe .claude/hooks/send-event.py</code></pre>
     <p>The forwarder uses only Python standard library modules &mdash; no <code>pip install</code> required.</p>
+    <p><strong>Additional Windows considerations:</strong></p>
+    <ul>
+      <li><strong>Install Claude Code first</strong> &mdash; Agent Recon hooks merge into <code>settings.json</code> which must already exist.</li>
+      <li><strong>Python Store alias</strong> &mdash; Fresh Windows 11 ships a <code>python.exe</code> that opens the Microsoft Store. Disable in <strong>Settings &rarr; Apps &rarr; App execution aliases</strong>.</li>
+      <li><strong>ExecutionPolicy</strong> &mdash; Default <code>Restricted</code> blocks npm. Run: <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></li>
+      <li><strong>Firewall</strong> &mdash; Windows Defender may block <code>node.exe</code>. Allow for private networks when prompted.</li>
+    </ul>
 
     <hr>
 
@@ -342,7 +355,7 @@ node start.js</code></pre>
     <p>This script:</p>
     <ul>
       <li>Copies <code>send-event-wsl.py</code> to <code>~/.claude/hooks/</code></li>
-      <li>Creates <code>~/.claude/settings.json</code> with all 13 hook registrations</li>
+      <li>Creates <code>~/.claude/settings.json</code> with all 25 hook registrations</li>
       <li>Verifies the Windows host is reachable</li>
     </ul>
 

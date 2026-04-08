@@ -212,26 +212,40 @@
     <ul>
       <li><strong>Node.js &gt;= 22</strong> &mdash; <a href="https://nodejs.org/">nodejs.org</a></li>
       <li><strong>Python 3</strong> &mdash; Required for hook scripts (<a href="https://www.python.org/">python.org</a>)</li>
-      <li><strong>C/C++ build tools</strong> &mdash; Required to compile the <code>better-sqlite3</code> native addon:
-        <ul>
-          <li><strong>Windows:</strong> <code>npm install -g windows-build-tools</code> or install Visual Studio Build Tools</li>
-          <li><strong>macOS:</strong> <code>xcode-select --install</code></li>
-          <li><strong>Linux (Debian/Ubuntu):</strong> <code>sudo apt install build-essential python3</code></li>
-          <li><strong>Linux (Fedora/RHEL):</strong> <code>sudo dnf groupinstall "Development Tools"</code></li>
-          <li><strong>Linux (Arch):</strong> <code>sudo pacman -S base-devel</code></li>
-        </ul>
-      </li>
+    </ul>
+    <blockquote>
+      <strong>Ubuntu / Debian users:</strong> The default <code>apt install nodejs</code> package ships Node.js 12 (Ubuntu 22.04)
+      or 18 (Ubuntu 24.04) &mdash; both too old. Install Node 22+ via
+      <a href="https://github.com/nvm-sh/nvm">nvm</a> (recommended, no root required) or
+      <a href="https://github.com/nodesource/distributions">NodeSource</a> (alternative, requires root).
+    </blockquote>
+    <blockquote>
+      <strong>Windows users:</strong>
+      <ul style="margin-top:8px">
+        <li><strong>Install Claude Code first.</strong> Agent Recon hooks merge into Claude Code&rsquo;s <code>settings.json</code> &mdash; it must exist before running <code>agent-recon install</code>.</li>
+        <li><strong>Disable the Python Store alias.</strong> Fresh Windows 11 has a <code>python.exe</code> alias that opens the Microsoft Store. Disable in <strong>Settings &rarr; Apps &rarr; App execution aliases</strong>.</li>
+        <li><strong>Set ExecutionPolicy.</strong> Run <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> in PowerShell (default <code>Restricted</code> policy blocks npm scripts).</li>
+        <li><strong>Allow Node.js through Windows Firewall.</strong> Windows Defender may block <code>node.exe</code> on dynamic ports. Allow access for private networks when prompted.</li>
+        <li><strong>Restart your terminal</strong> after installing prerequisites. PATH changes may not be visible in existing sessions.</li>
+      </ul>
+    </blockquote>
+    <ul>
+      <li><strong>C/C++ build tools</strong> &mdash; <em>Not typically needed.</em> Prebuilt binaries are downloaded automatically for most platforms. See <a href="#better-sqlite3-build-failure">Troubleshooting</a> if installation fails.</li>
     </ul>
 
     <h2 id="npm-recommended">npm (Recommended)</h2>
     <pre><code>npm install -g agent-recon</code></pre>
     <p>Then run the guided installer:</p>
     <pre><code>agent-recon install</code></pre>
+    <p>
+      For unattended CI or remote installs, pass <code>--yes</code> to accept all defaults without prompts:
+    </p>
+    <pre><code>agent-recon install --yes</code></pre>
     <p>The installer will:</p>
     <ol>
       <li>Detect your platform and existing configuration</li>
       <li>Copy hook scripts to your Claude Code hooks directory</li>
-      <li>Register 13 lifecycle events in Claude Code settings</li>
+      <li>Register 25 lifecycle events in Claude Code settings</li>
       <li>Optionally configure LLM API keys for analysis features</li>
       <li>Optionally set up an auto-start service (systemd / launchd / Windows Service)</li>
       <li>Verify the server starts and responds</li>
@@ -273,12 +287,18 @@ agent-recon upgrade
     <pre><code>npm uninstall -g agent-recon</code></pre>
 
     <h2 id="cli-commands">CLI Commands</h2>
-    <pre><code>agent-recon install      # Guided installation (default)
-agent-recon upgrade      # Upgrade existing installation
-agent-recon uninstall    # Remove Agent Recon
-agent-recon detect       # Print environment detection report
-agent-recon --help       # Show help
-agent-recon --version    # Show version</code></pre>
+    <pre><code>agent-recon install            # Guided installation (default)
+agent-recon install --yes      # Unattended install (accept all defaults)
+agent-recon upgrade            # Upgrade existing installation
+agent-recon uninstall          # Remove Agent Recon
+agent-recon uninstall --yes    # Unattended uninstall (preserve data)
+agent-recon detect             # Print environment detection report
+agent-recon --help             # Show help
+agent-recon --version          # Show version</code></pre>
+    <p>
+      The <code>--yes</code> flag (aliases: <code>-y</code>, <code>--non-interactive</code>) accepts all defaults without prompts.
+      It is also enabled automatically when stdin is not a TTY (e.g., piped scripts, CI runners).
+    </p>
 
     <h2 id="platform-package-managers">Platform Package Managers</h2>
 
@@ -347,6 +367,20 @@ agent-recon detect
 # Check server health (server must be running)
 curl http://localhost:3131/health</code></pre>
 
+    <h2 id="data-directory">Data Directory</h2>
+    <p>
+      When installed globally via npm, Agent Recon stores its database in a platform-specific user-writable directory:
+    </p>
+    <table>
+      <thead><tr><th>Platform</th><th>Default path</th></tr></thead>
+      <tbody>
+        <tr><td>Linux / WSL</td><td><code>~/.config/agent-recon/data/</code></td></tr>
+        <tr><td>macOS</td><td><code>~/Library/Application Support/agent-recon/data/</code></td></tr>
+        <tr><td>Windows</td><td><code>%APPDATA%\agent-recon\data\</code></td></tr>
+      </tbody>
+    </table>
+    <p>Override with the <code>AGENT_RECON_DATA_DIR</code> environment variable.</p>
+
     <h2 id="troubleshooting">Troubleshooting</h2>
 
     <h3 id="better-sqlite3-build-failure"><code>better-sqlite3</code> build failure</h3>
@@ -363,7 +397,7 @@ curl http://localhost:3131/health</code></pre>
       <code>python</code> in your PATH.
     </p>
     <ul>
-      <li><strong>Windows:</strong> Install from <a href="https://www.python.org/">python.org</a> and ensure &ldquo;Add to PATH&rdquo; is checked</li>
+      <li><strong>Windows:</strong> First disable the Microsoft Store alias (<strong>Settings &rarr; Apps &rarr; App execution aliases</strong>). Then install from <a href="https://www.python.org/">python.org</a> and ensure &ldquo;Add to PATH&rdquo; is checked.</li>
       <li><strong>macOS:</strong> <code>brew install python</code> or use the system Python 3</li>
       <li><strong>Linux:</strong> <code>sudo apt install python3</code> (Debian/Ubuntu) or <code>sudo dnf install python3</code> (Fedora)</li>
     </ul>
@@ -386,6 +420,32 @@ export PATH="$HOME/.npm-global/bin:$PATH"</code></pre>
       <li>Ensure the database directory is writable: <code>ls -la data/</code></li>
       <li>Check logs: set <code>AGENT_RECON_DEBUG=1</code> before starting</li>
     </ol>
+
+    <h3 id="eacces-global-install">EACCES permission denied on server start (global install)</h3>
+    <p>
+      If the server crashes with <code>EACCES: permission denied, mkdir '...data'</code>, the data
+      directory resolved to a root-owned location. Upgrade to v1.0.3+ which uses a user-writable
+      <a href="#data-directory">data directory</a> automatically.
+    </p>
+    <p>Workaround: <code>AGENT_RECON_DATA_DIR=~/.config/agent-recon/data agent-recon start</code></p>
+
+    <h3 id="windows-specific-issues">Windows-Specific Issues</h3>
+    <p>See the <a href="#prerequisites">Prerequisites</a> section for Windows setup requirements. Additional notes:</p>
+    <ul>
+      <li><strong>Python opens Microsoft Store:</strong> Disable the Store alias in <strong>Settings &rarr; Apps &rarr; App execution aliases</strong>.</li>
+      <li><strong>ExecutionPolicy blocks npm:</strong> <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></li>
+      <li><strong>Node.js blocked by firewall:</strong> Allow <code>node.exe</code> in Windows Defender Firewall for private networks.</li>
+      <li><strong>PATH not updated:</strong> Restart your terminal after installing prerequisites via winget or installers.</li>
+      <li><strong>Install order:</strong> Claude Code must be installed and authenticated before running <code>agent-recon install</code>.</li>
+    </ul>
+
+    <h3 id="headless-credential-storage">Credential storage on headless Linux / SSH</h3>
+    <p>
+      On headless servers or SSH sessions, <code>libsecret</code> requires a D-Bus session and unlocked keyring.
+      The server falls back to PBKDF2 file-based encryption automatically. If credential errors persist, set:
+    </p>
+    <pre><code>export AGENT_RECON_MASTER_KEY=$(openssl rand -hex 32)
+agent-recon start</code></pre>
   </main>
 
   <!-- Footer -->
