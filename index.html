@@ -150,14 +150,15 @@
       color: var(--accent-light);
       margin-bottom: 12px;
     }
-    .prereq-headline { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-    .prereq-items { font-size: 15px; margin-bottom: 12px; }
+    .prereq-headline { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .prereq-items { font-size: 15px; margin-bottom: 12px; color: var(--muted); }
     .prereq-platform {
       font-size: 14px;
       color: var(--muted);
       margin-bottom: 8px;
       line-height: 1.7;
     }
+    .prereq-platform code { word-break: break-all; }
     .platform-badge {
       display: inline-block;
       color: #fff;
@@ -169,9 +170,10 @@
       margin-right: 4px;
     }
     .platform-badge--win { background: var(--blue); }
-    .platform-badge--mac { background: var(--muted); }
+    .platform-badge--mac { background: #6e7681; }
     .platform-badge--linux { background: var(--yellow); }
-    .prereq-note { font-size: 13px; color: var(--muted); }
+    .platform-badge--wsl { background: var(--green); }
+    .prereq-note { font-size: 13px; color: var(--muted); margin-top: 12px; }
 
     /* ── Sections ──────────────────────────────────────────────────────── */
     section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
@@ -639,7 +641,7 @@
       <a class="docs-card" href="docs/quick-start.html">
         <span class="icon">&#x1F680;</span>
         <h3>Quick Start</h3>
-        <p>Install, configure, and see your first events in under 60 seconds.</p>
+        <p>Install, configure, and see your first events in minutes.</p>
       </a>
       <a class="docs-card" href="docs/install.html">
         <span class="icon">&#x1F4E6;</span>
@@ -656,7 +658,7 @@
 
   <!-- Install -->
   <section id="install">
-    <h2>Get started in 60 seconds</h2>
+    <h2>Get started in minutes</h2>
     <p class="section-sub">Install the prerequisites, then two commands to go live.</p>
     <div style="text-align:center">
       <div class="prereq-box">
@@ -669,15 +671,25 @@
         </div>
         <div class="prereq-platform">
           <span class="platform-badge platform-badge--win">Windows</span>
-          Run <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> in PowerShell
+          Install Claude Code first &middot;
+          Disable <a href="docs/install.html#python-not-found">Python Store alias</a> &middot;
+          Run <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> &middot;
+          Allow Node.js through firewall &middot;
+          Restart terminal after installing
         </div>
         <div class="prereq-platform">
           <span class="platform-badge platform-badge--mac">macOS</span>
-          Run <code>xcode-select --install</code> if prompted (required for native modules)
+          Run <code>xcode-select --install</code> if <code>npm install</code> fails (prebuilt binaries usually suffice)
         </div>
         <div class="prereq-platform">
           <span class="platform-badge platform-badge--linux">Linux</span>
           Use <a href="https://github.com/nvm-sh/nvm">nvm</a> for Node.js 22+ &mdash; <code>apt</code> packages are too old
+        </div>
+        <div class="prereq-platform">
+          <span class="platform-badge platform-badge--wsl">WSL</span>
+          Server runs on the Windows host &mdash;
+          run <code>agent-recon install</code> from WSL.
+          <a href="docs/quick-start.html#wsl-tmux-support">WSL docs &rarr;</a>
         </div>
         <div class="prereq-note">
           Restart your terminal after installing prerequisites.

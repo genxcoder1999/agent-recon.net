@@ -222,7 +222,7 @@
     <blockquote>
       <strong>Windows users:</strong>
       <ul style="margin-top:8px">
-        <li><strong>Install Claude Code first.</strong> Agent Recon hooks merge into Claude Code&rsquo;s <code>settings.json</code> &mdash; it must exist before running <code>agent-recon install</code>.</li>
+        <li><strong>Install Claude Code first (recommended).</strong> Agent Recon hooks merge into Claude Code&rsquo;s <code>settings.json</code>. If it doesn&rsquo;t exist, the installer creates it automatically, but installing Claude Code first ensures hooks are configured correctly.</li>
         <li><strong>Disable the Python Store alias.</strong> Fresh Windows 11 has a <code>python.exe</code> alias that opens the Microsoft Store. Disable in <strong>Settings &rarr; Apps &rarr; App execution aliases</strong>.</li>
         <li><strong>Set ExecutionPolicy.</strong> Run <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> in PowerShell (default <code>Restricted</code> policy blocks npm scripts).</li>
         <li><strong>Allow Node.js through Windows Firewall.</strong> Windows Defender may block <code>node.exe</code> on dynamic ports. Allow access for private networks when prompted.</li>
@@ -243,7 +243,9 @@
     <pre><code>agent-recon install --yes</code></pre>
     <p>The installer will:</p>
     <ol>
+      <li>Display the license agreement (EULA)</li>
       <li>Detect your platform and existing configuration</li>
+      <li>Select an installation directory</li>
       <li>Copy hook scripts to your Claude Code hooks directory</li>
       <li>Register 25 lifecycle events in Claude Code settings</li>
       <li>Optionally configure LLM API keys for analysis features</li>
@@ -252,7 +254,7 @@
     </ol>
 
     <h2 id="from-source">From Source</h2>
-    <pre><code>git clone &lt;repository-url&gt;
+    <pre><code>git clone https://github.com/genxcoder1999/agent-recon.git
 cd agent-recon
 
 # Install server dependencies
@@ -331,16 +333,16 @@ agent-recon --version          # Show version</code></pre>
     <pre><code>mkcert -install</code></pre>
 
     <h3 id="enable-tls-during-install">Enable TLS during install</h3>
-    <pre><code>npx agent-recon install --tls</code></pre>
+    <pre><code>agent-recon install --tls</code></pre>
     <p>
       This pre-selects the mkcert option in the guided installer. You can also choose TLS
-      interactively during a normal <code>npx agent-recon install</code>.
+      interactively during a normal <code>agent-recon install</code>.
     </p>
 
     <h3 id="enable-tls-on-existing-installation">Enable TLS on an existing installation</h3>
-    <pre><code>npx agent-recon tls setup     # configure mkcert TLS via server API
-npx agent-recon tls status    # check current TLS status
-npx agent-recon upgrade --tls # add TLS during upgrade</code></pre>
+    <pre><code>agent-recon tls setup     # configure mkcert TLS via server API
+agent-recon tls status    # check current TLS status
+agent-recon upgrade --tls # add TLS during upgrade</code></pre>
     <p>
       After enabling TLS, restart the server. The dashboard will be available at
       <code>https://localhost:3132</code> with a green padlock.
@@ -393,8 +395,8 @@ curl http://localhost:3131/health</code></pre>
 
     <h3 id="python-not-found">Python not found</h3>
     <p>
-      Hook scripts require Python 3. The installer checks for <code>python3</code> and
-      <code>python</code> in your PATH.
+      Hook scripts require Python 3. The installer checks for <code>python3</code>,
+      <code>python</code>, and <code>py</code> (Windows Python Launcher) in your PATH.
     </p>
     <ul>
       <li><strong>Windows:</strong> First disable the Microsoft Store alias (<strong>Settings &rarr; Apps &rarr; App execution aliases</strong>). Then install from <a href="https://www.python.org/">python.org</a> and ensure &ldquo;Add to PATH&rdquo; is checked.</li>
@@ -436,7 +438,7 @@ export PATH="$HOME/.npm-global/bin:$PATH"</code></pre>
       <li><strong>ExecutionPolicy blocks npm:</strong> <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></li>
       <li><strong>Node.js blocked by firewall:</strong> Allow <code>node.exe</code> in Windows Defender Firewall for private networks.</li>
       <li><strong>PATH not updated:</strong> Restart your terminal after installing prerequisites via winget or installers.</li>
-      <li><strong>Install order:</strong> Claude Code must be installed and authenticated before running <code>agent-recon install</code>.</li>
+      <li><strong>Install order:</strong> Installing Claude Code first is recommended. The installer creates <code>settings.json</code> if missing, but having Claude Code already set up ensures hooks work correctly.</li>
     </ul>
 
     <h3 id="headless-credential-storage">Credential storage on headless Linux / SSH</h3>
