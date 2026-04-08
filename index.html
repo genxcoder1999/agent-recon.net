@@ -150,6 +150,7 @@
       color: var(--accent-light);
       margin-bottom: 12px;
     }
+    .prereq-headline { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
     .prereq-items { font-size: 15px; margin-bottom: 12px; }
     .prereq-platform {
       font-size: 14px;
@@ -660,13 +661,14 @@
     <div style="text-align:center">
       <div class="prereq-box">
         <div class="prereq-title">Prerequisites</div>
+        <div class="prereq-headline">
+          Install and Test Agentic Coding Tool (e.g., <a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code</a>)
+        </div>
         <div class="prereq-items">
-          <a href="https://nodejs.org/">Node.js 22+</a> &middot;
-          <a href="https://www.python.org/">Python 3</a>
+          Requires <a href="https://nodejs.org/">Node.js 22+</a> and <a href="https://www.python.org/">Python 3</a>
         </div>
         <div class="prereq-platform">
           <span class="platform-badge platform-badge--win">Windows</span>
-          Install Claude Code first &middot;
           Run <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> in PowerShell
         </div>
         <div class="prereq-platform">
