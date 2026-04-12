@@ -192,6 +192,39 @@
       when the heartbeat is received. The client never sends IP information.
     </p>
 
+    <h2 id="1b-website-analytics">1b. Website Analytics</h2>
+    <p>
+      When you visit <strong>www.agent-recon.net</strong>, a lightweight analytics beacon records
+      the following data:
+    </p>
+    <ul>
+      <li><strong>Page path</strong> &mdash; which page you visited (e.g., <code>/</code>, <code>/privacy.html</code>)</li>
+      <li><strong>Referrer domain</strong> &mdash; the hostname of the page that linked you here (stripped to domain only)</li>
+      <li><strong>Device class</strong> &mdash; desktop, mobile, or bot (derived from User-Agent header)</li>
+      <li><strong>Timestamp</strong> &mdash; when the page was loaded</li>
+    </ul>
+    <p>
+      Your IP address is captured server-side by Azure infrastructure (not sent by the beacon).
+      IP addresses are <strong>not stored</strong> in the site analytics table and are not used for tracking.
+    </p>
+    <p><strong>What we do NOT do with website analytics:</strong></p>
+    <ul>
+      <li>No cookies or tracking pixels</li>
+      <li>No browser fingerprinting</li>
+      <li>No cross-site tracking</li>
+      <li>No advertising or profiling</li>
+      <li>No third-party analytics services (e.g., Google Analytics)</li>
+    </ul>
+    <p>
+      Website analytics data is retained for <strong>90 days</strong>, then permanently deleted.
+      Daily aggregate summaries (total page views per day, with no individual visitor data) are retained indefinitely.
+    </p>
+    <p>
+      <strong>Legal basis (GDPR):</strong> Legitimate interest in understanding website traffic
+      to improve the product and prioritize development. You may object by using a browser
+      extension that blocks analytics beacons, or by disabling JavaScript.
+    </p>
+
     <h2 id="2-what-we-do-not-collect">2. What We Do NOT Collect</h2>
     <p>Agent Recon does <strong>not</strong> collect any of the following:</p>
     <ul>
@@ -320,5 +353,11 @@
     </div>
   </footer>
 
+  <script>
+  (function(){try{navigator.sendBeacon&&navigator.sendBeacon(
+    'https://telemetry.agent-recon.net/api/site-ping',
+    JSON.stringify({path:location.pathname||'/',referrer:document.referrer||'',token:''})
+  )}catch(e){}})();
+  </script>
 </body>
 </html>
