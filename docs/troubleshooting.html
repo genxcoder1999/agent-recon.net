@@ -228,7 +228,7 @@
     <ol>
       <li>
         <strong>Verify hook installation.</strong> Claude Code must have <code>send-event.py</code>
-        (or <code>send-event-wsl.py</code> on WSL) registered for all 25 hook events in
+        (or <code>send-event-wsl.py</code> on WSL) registered for all 23 hook events in
         <code>~/.claude/settings.json</code>:
         <pre><code>{
   "hooks": {
@@ -253,8 +253,6 @@
     "ConfigChange":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
     "CwdChanged":          [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
     "FileChanged":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "WorktreeCreate":      [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "WorktreeRemove":      [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
     "TaskCreated":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
     "ElicitationResult":   [{ "type": "command", "command": "python3 /path/to/send-event.py" }]
   }
@@ -596,7 +594,7 @@ FROM llm_analysis_usage GROUP BY module, model;</code></pre>
       <li>
         <strong>Check settings.json:</strong>
         <pre><code>cat ~/.claude/settings.json | python3 -m json.tool</code></pre>
-        <p>Confirm all 25 hook events are listed with the correct path to <code>send-event.py</code>.</p>
+        <p>Confirm all 23 hook events are listed with the correct path to <code>send-event.py</code>.</p>
       </li>
       <li>
         <strong>Test the hook script manually:</strong>
