@@ -210,8 +210,7 @@
 
     <h2 id="prerequisites">Prerequisites</h2>
     <ul>
-      <li><strong>Node.js &gt;= 22</strong> &mdash; <a href="https://nodejs.org/">nodejs.org</a></li>
-      <li><strong>Python 3</strong> &mdash; Required for hook scripts (<a href="https://www.python.org/">python.org</a>)</li>
+      <li><strong>Node.js &gt;= 22</strong> &mdash; <a href="https://nodejs.org/">nodejs.org</a>. This is the only runtime you need — the server, CLI, hook forwarder, and setup scripts all run on Node.</li>
     </ul>
     <blockquote>
       <strong>Ubuntu / Debian users:</strong> The default <code>apt install nodejs</code> package ships Node.js 12 (Ubuntu 22.04)
@@ -223,9 +222,9 @@
       <strong>Windows users:</strong>
       <ul style="margin-top:8px">
         <li><strong>Install Claude Code first (recommended).</strong> Agent Recon hooks merge into Claude Code&rsquo;s <code>settings.json</code>. If it doesn&rsquo;t exist, the installer creates it automatically, but installing Claude Code first ensures hooks are configured correctly.</li>
-        <li><strong>Disable the Python Store alias.</strong> Fresh Windows 11 has a <code>python.exe</code> alias that opens the Microsoft Store. Disable in <strong>Settings &rarr; Apps &rarr; App execution aliases</strong>.</li>
         <li><strong>Set ExecutionPolicy.</strong> Run <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> in PowerShell (default <code>Restricted</code> policy blocks npm scripts).</li>
         <li><strong>Allow Node.js through Windows Firewall.</strong> Windows Defender may block <code>node.exe</code> on dynamic ports. Allow access for private networks when prompted.</li>
+        <li><strong>Node version managers.</strong> If you use nvm-windows, Volta, or fnm, Claude Code&rsquo;s Git Bash may not see the shim on PATH. The installer probes <code>node --version</code> at install time and falls back to the absolute path of the current Node runtime. Re-run <code>agent-recon install</code> after switching Node versions.</li>
         <li><strong>Restart your terminal</strong> after installing prerequisites. PATH changes may not be visible in existing sessions.</li>
       </ul>
     </blockquote>
@@ -377,15 +376,16 @@ curl http://localhost:3131/health</code></pre>
       <li>On WSL, ensure you are on a native ext4 filesystem, not an NTFS mount (<code>/mnt/c/...</code>)</li>
     </ol>
 
-    <h3 id="python-not-found">Python not found</h3>
+    <h3 id="node-not-found-git-bash">Node not found in Git Bash (Windows)</h3>
     <p>
-      Hook scripts require Python 3. The installer checks for <code>python3</code>,
-      <code>python</code>, and <code>py</code> (Windows Python Launcher) in your PATH.
+      Claude Code on Windows invokes hook commands through Git Bash, which sometimes doesn&rsquo;t
+      share PATH with the shell that installed Agent Recon (nvm-windows / Volta / fnm shims).
+      The installer probes <code>node --version</code> at install time and falls back to the
+      absolute path of the current Node runtime when the probe fails.
     </p>
     <ul>
-      <li><strong>Windows:</strong> First disable the Microsoft Store alias (<strong>Settings &rarr; Apps &rarr; App execution aliases</strong>). Then install from <a href="https://www.python.org/">python.org</a> and ensure &ldquo;Add to PATH&rdquo; is checked.</li>
-      <li><strong>macOS:</strong> <code>brew install python</code> or use the system Python 3</li>
-      <li><strong>Linux:</strong> <code>sudo apt install python3</code> (Debian/Ubuntu) or <code>sudo dnf install python3</code> (Fedora)</li>
+      <li>If you switch Node versions after installing Agent Recon, re-run <code>agent-recon install</code> to refresh the hook command in <code>~/.claude/settings.json</code>.</li>
+      <li>On macOS/Linux/WSL, <code>node</code> on PATH is always reliable and no fallback is needed.</li>
     </ul>
 
     <h3 id="permission-errors-on-global-install">Permission errors on global install</h3>

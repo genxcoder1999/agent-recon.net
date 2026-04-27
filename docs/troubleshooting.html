@@ -227,34 +227,34 @@
     <p><strong>Checklist:</strong></p>
     <ol>
       <li>
-        <strong>Verify hook installation.</strong> Claude Code must have <code>send-event.py</code>
-        (or <code>send-event-wsl.py</code> on WSL) registered for all 23 hook events in
-        <code>~/.claude/settings.json</code>:
+        <strong>Verify hook installation.</strong> Claude Code must have <code>send-event.js</code>
+        registered for all 24 hook events in <code>~/.claude/settings.json</code>:
         <pre><code>{
   "hooks": {
-    "PreToolUse":          [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
-    "PostToolUse":         [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
-    "PostToolUseFailure":  [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
-    "Notification":        [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
-    "PreCompact":          [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
-    "PermissionRequest":   [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
-    "Elicitation":         [{ "type": "command", "command": "python3 /path/to/send-event.py", "matcher": "" }],
-    "UserPromptSubmit":    [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "Stop":                [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "SessionStart":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "SessionEnd":          [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "SubagentStart":       [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "SubagentStop":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "TaskCompleted":       [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "TeammateIdle":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "StopFailure":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "PostCompact":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "InstructionsLoaded":  [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "ConfigChange":        [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "CwdChanged":          [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "FileChanged":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "TaskCreated":         [{ "type": "command", "command": "python3 /path/to/send-event.py" }],
-    "ElicitationResult":   [{ "type": "command", "command": "python3 /path/to/send-event.py" }]
+    "PreToolUse":          [{ "type": "command", "command": "node /path/to/send-event.js", "matcher": "" }],
+    "PostToolUse":         [{ "type": "command", "command": "node /path/to/send-event.js", "matcher": "" }],
+    "PostToolUseFailure":  [{ "type": "command", "command": "node /path/to/send-event.js", "matcher": "" }],
+    "Notification":        [{ "type": "command", "command": "node /path/to/send-event.js", "matcher": "" }],
+    "PreCompact":          [{ "type": "command", "command": "node /path/to/send-event.js", "matcher": "" }],
+    "PermissionRequest":   [{ "type": "command", "command": "node /path/to/send-event.js", "matcher": "" }],
+    "Elicitation":         [{ "type": "command", "command": "node /path/to/send-event.js", "matcher": "" }],
+    "PermissionDenied":    [{ "type": "command", "command": "node /path/to/send-event.js", "matcher": "" }],
+    "UserPromptSubmit":    [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "Stop":                [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "SessionStart":        [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "SessionEnd":          [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "SubagentStart":       [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "SubagentStop":        [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "TaskCompleted":       [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "TeammateIdle":        [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "StopFailure":         [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "PostCompact":         [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "InstructionsLoaded":  [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "ConfigChange":        [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "CwdChanged":          [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "FileChanged":         [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "TaskCreated":         [{ "type": "command", "command": "node /path/to/send-event.js" }],
+    "ElicitationResult":   [{ "type": "command", "command": "node /path/to/send-event.js" }]
   }
 }</code></pre>
         <p>
@@ -436,18 +436,21 @@
       <li>Events from different agent_ids (main agent vs. subagent)</li>
     </ul>
     <p>
-      If true duplicates persist, verify that only one hook script is installed per event type in
-      <code>settings.json</code> (not both <code>send-event.py</code> and
-      <code>send-event-wsl.py</code>).
+      If true duplicates persist, verify that only one hook command is registered per event type
+      in <code>settings.json</code>. When upgrading from v1.0.x, ensure no legacy
+      <code>send-event.py</code> entries remain alongside the new <code>send-event.js</code>
+      entries — the installer's upgrade flow strips them, but manual config files may still
+      have both.
     </p>
 
     <h3 id="windows-specific-issues">Windows-Specific Issues</h3>
     <p>
-      <strong>Python opens Microsoft Store instead of running:</strong>
-      Fresh Windows 11 installs ship a <code>python.exe</code> alias that opens the Microsoft Store.
-      Disable it in <strong>Settings &rarr; Apps &rarr; App execution aliases</strong> (turn off
-      &ldquo;python.exe&rdquo; and &ldquo;python3.exe&rdquo;), then install Python from
-      <a href="https://www.python.org/">python.org</a>.
+      <strong><code>node</code> not found on Git Bash PATH (nvm-windows / Volta / fnm):</strong>
+      Claude Code on Windows runs hook commands through Git Bash, which sometimes doesn't share
+      PATH with the shell that installed Agent Recon. The installer probes for <code>node --version</code>
+      at install time and falls back to the absolute path of the current Node runtime when the
+      probe fails. If you switch Node versions after installing Agent Recon, re-run
+      <code>agent-recon install</code> (or <code>setup.ps1</code>) to refresh the hook command.
     </p>
     <p>
       <strong>ExecutionPolicy blocks npm scripts:</strong>
@@ -593,19 +596,19 @@ FROM llm_analysis_usage GROUP BY module, model;</code></pre>
     <ol>
       <li>
         <strong>Check settings.json:</strong>
-        <pre><code>cat ~/.claude/settings.json | python3 -m json.tool</code></pre>
-        <p>Confirm all 23 hook events are listed with the correct path to <code>send-event.py</code>.</p>
+        <pre><code>node -e "console.log(JSON.stringify(JSON.parse(require('fs').readFileSync(require('os').homedir() + '/.claude/settings.json','utf8')), null, 2))"</code></pre>
+        <p>Confirm all 24 hook events are listed with the correct path to <code>send-event.js</code>.</p>
       </li>
       <li>
         <strong>Test the hook script manually:</strong>
         <pre><code>echo '{"session_id":"test","hook_event_name":"UserPromptSubmit","prompt":"hello"}' | \
-  python3 ~/.claude/hooks/send-event.py</code></pre>
+  node ~/.claude/hooks/send-event.js</code></pre>
         <p>Check the server terminal for the received event.</p>
       </li>
       <li>
         <strong>Verify hook script matches source:</strong>
-        <pre><code>sha256sum ~/.claude/hooks/send-event.py
-sha256sum /path/to/agent-recon/.claude/hooks/send-event.py</code></pre>
+        <pre><code>sha256sum ~/.claude/hooks/send-event.js
+sha256sum /path/to/agent-recon/.claude/hooks/send-event.js</code></pre>
         <p>If hashes differ, re-run the setup script.</p>
       </li>
     </ol>
@@ -624,14 +627,15 @@ sha256sum /path/to/agent-recon/.claude/hooks/send-event.py</code></pre>
 
     <h4 id="lf-line-endings-required">LF line endings required</h4>
     <p>
-      Python hook scripts (<code>.py</code>) and bash setup scripts (<code>.sh</code>) must have
-      LF line endings. CRLF breaks the Python shebang line and bash
+      The Node.js hook script (<code>send-event.js</code>) and bash setup scripts
+      (<code>.sh</code>) must have LF line endings. CRLF breaks the
+      <code>#!/usr/bin/env node</code> shebang line on Unix and bash
       <code>set -euo pipefail</code>. If hooks fail silently after editing on Windows, check line
       endings:
     </p>
-    <pre><code>file ~/.claude/hooks/send-event.py
-# Should show: Python script, ASCII text executable
-# Bad: Python script, ASCII text executable, with CRLF line terminators</code></pre>
+    <pre><code>file ~/.claude/hooks/send-event.js
+# Should show: Node.js script executable, ASCII text
+# Bad: Node.js script executable, ASCII text, with CRLF line terminators</code></pre>
 
     <h4 id="build-js-function-form-replacement">build.js function-form replacement</h4>
     <p>

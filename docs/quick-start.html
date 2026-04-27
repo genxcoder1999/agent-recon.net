@@ -256,14 +256,14 @@ node server/start.js</code></pre>
     <pre><code>Claude Code Agent(s)
      |  hook fires &rarr; stdin JSON
      v
-.claude/hooks/send-event.py  --HTTP POST--&gt;  server/server.js (port 3131)
+.claude/hooks/send-event.js  --HTTP POST--&gt;  server/server.js (port 3131)
                                                       |
                                               WebSocket broadcast
                                                       v
                                            public/index.html (browser)
                                          icons &middot; sounds &middot; live feed</code></pre>
     <p>
-      Every hook registered in <code>.claude/settings.json</code> is wired to <code>send-event.py</code>,
+      Every hook registered in <code>.claude/settings.json</code> is wired to <code>send-event.js</code>,
       which runs asynchronously (never blocking Claude) and forwards the payload to the local server.
       The server stores up to 1&nbsp;000 events in memory and fans them out to every connected browser tab
       via WebSocket. Late-joining tabs receive the full event history on connect.
@@ -314,16 +314,17 @@ node server/start.js</code></pre>
 
     <h2 id="windows-notes">Windows Notes</h2>
     <p>The hook command in <code>.claude/settings.json</code> is:</p>
-    <pre><code>python .claude/hooks/send-event.py</code></pre>
+    <pre><code>node .claude/hooks/send-event.js</code></pre>
     <p>
-      If <code>python</code> is not on your PATH, replace it with the full path to your Python 3 executable, e.g.:
+      If <code>node</code> is not on your PATH when Git Bash runs the hook (e.g. nvm-windows / Volta / fnm shims),
+      the installer falls back to the absolute path of your Node.js executable:
     </p>
-    <pre><code>C:\Python312\python.exe .claude/hooks/send-event.py</code></pre>
-    <p>The forwarder uses only Python standard library modules &mdash; no <code>pip install</code> required.</p>
+    <pre><code>C:/Program Files/nodejs/node.exe .claude/hooks/send-event.js</code></pre>
+    <p>The forwarder uses only Node.js standard library modules &mdash; no <code>npm install</code> required.</p>
     <p><strong>Additional Windows considerations:</strong></p>
     <ul>
       <li><strong>Install Claude Code first (recommended)</strong> &mdash; Agent Recon hooks merge into <code>settings.json</code>. The installer creates it if missing, but having Claude Code installed first is recommended.</li>
-      <li><strong>Python Store alias</strong> &mdash; Fresh Windows 11 ships a <code>python.exe</code> that opens the Microsoft Store. Disable in <strong>Settings &rarr; Apps &rarr; App execution aliases</strong>.</li>
+      <li><strong>Node on Git Bash PATH</strong> &mdash; If you use a Node version manager (nvm-windows, Volta, fnm), re-run <code>agent-recon install</code> after switching Node versions to refresh the hook command.</li>
       <li><strong>ExecutionPolicy</strong> &mdash; Default <code>Restricted</code> blocks npm. Run: <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></li>
       <li><strong>Firewall</strong> &mdash; Windows Defender may block <code>node.exe</code>. Allow for private networks when prompted.</li>
     </ul>
@@ -340,7 +341,7 @@ node server/start.js</code></pre>
   Claude Code Agent
        |  hook fires &rarr; stdin JSON
        v
-~/.claude/hooks/send-event-wsl.py  --HTTP POST--&gt;  Windows host IP:3131
+~/.claude/hooks/send-event.js  --HTTP POST--&gt;  Windows host IP:3131
                                                           |
                                                   (same server.js)
                                                           v
@@ -360,8 +361,8 @@ node server/start.js</code></pre>
     <pre><code>bash /path/to/agent-recon/setup-wsl.sh</code></pre>
     <p>This script:</p>
     <ul>
-      <li>Copies <code>send-event-wsl.py</code> to <code>~/.claude/hooks/</code></li>
-      <li>Creates <code>~/.claude/settings.json</code> with all 23 hook registrations</li>
+      <li>Copies <code>send-event.js</code> to <code>~/.claude/hooks/</code></li>
+      <li>Creates <code>~/.claude/settings.json</code> with all 24 hook registrations</li>
       <li>Verifies the Windows host is reachable</li>
     </ul>
 
@@ -372,9 +373,9 @@ claude</code></pre>
 
     <h3 id="wsl-host-detection">How the WSL forwarder finds the Windows host</h3>
     <p>
-      It reads the <code>nameserver</code> from <code>/etc/resolv.conf</code> (the WSL2 virtual gateway).
-      If that fails it falls back to <code>ip route show default</code>. The server accepts connections
-      from all RFC 1918 private ranges (10.x, 172.16-31.x, 192.168.x) in addition to loopback.
+      It parses <code>/proc/net/route</code> to find the default gateway (the WSL2 virtual gateway
+      is the Windows host). The server accepts connections from all RFC 1918 private ranges
+      (10.x, 172.16-31.x, 192.168.x) in addition to loopback.
     </p>
 
     <hr>
@@ -382,8 +383,7 @@ claude</code></pre>
     <h2 id="file-structure">File Structure</h2>
     <pre><code>├── .claude/
 │   ├── hooks/
-│   │   ├── send-event.py          # Hook forwarder — Windows, macOS, Linux (stdlib only)
-│   │   └── send-event-wsl.py      # Hook forwarder — WSL (auto-detects Windows host IP)
+│   │   └── send-event.js          # Cross-platform hook forwarder (stdlib only; auto-detects WSL)
 │   └── settings.json              # Hook registrations for Claude Code
 ├── server/
 │   ├── package.json
