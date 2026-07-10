@@ -234,7 +234,20 @@ agent-recon install</code></pre>
       See the <a href="../docs/install.html">Installation Guide</a> for prerequisites, troubleshooting, and alternative methods.
     </p>
 
-    <h3 id="option-b">Option B &mdash; From source</h3>
+    <h3 id="option-b">Option B &mdash; Install via a package manager</h3>
+    <p>Homebrew (macOS / Linux) &mdash; installs Node.js for you:</p>
+    <pre><code>brew tap genxcoder1999/agent-recon
+brew install agent-recon
+agent-recon install</code></pre>
+    <p>Scoop (Windows) &mdash; installs Node.js for you:</p>
+    <pre><code>scoop bucket add agent-recon https://github.com/genxcoder1999/scoop-agent-recon
+scoop install agent-recon
+agent-recon install</code></pre>
+    <p>
+      See the <a href="../docs/install.html#platform-package-managers">Installation Guide</a> for details.
+    </p>
+
+    <h3 id="option-c">Option C &mdash; From source</h3>
     <pre><code>cd server &amp;&amp; npm install &amp;&amp; cd ..
 node server/start.js</code></pre>
     <p>
