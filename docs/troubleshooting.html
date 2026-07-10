@@ -264,6 +264,18 @@
         </p>
       </li>
       <li>
+        <strong>Claude Code Safe Mode disables all hooks.</strong> If <code>CLAUDE_CODE_SAFE_MODE</code>
+        is set in the environment, Claude Code runs no hooks at all, so Agent Recon receives nothing —
+        a completely empty dashboard with a healthy, connected server is the signature. Unset it
+        (<code>unset CLAUDE_CODE_SAFE_MODE</code>) and restart Claude Code.
+      </li>
+      <li>
+        <strong>GitHub Copilot CLI: check hook provenance with <code>/env</code>.</strong> Run
+        <code>/env</code> inside Copilot CLI and confirm the Agent Recon hooks appear under its hook
+        configuration. If they're absent, the config in <code>~/.copilot/hooks/agent-recon.json</code>
+        didn't load — fully restart Copilot and verify it uses the full <code>node</code> path.
+      </li>
+      <li>
         <strong>Verify the server is running.</strong> From any terminal:
         <pre><code>curl http://localhost:3131/health</code></pre>
         <p>
@@ -502,12 +514,17 @@
     <h3 id="credential-storage-headless-linux">Credential storage on headless Linux / SSH</h3>
     <p>
       On headless Linux servers or SSH sessions, <code>libsecret</code> requires a D-Bus session and
-      unlocked keyring, which are typically unavailable. The server falls back to PBKDF2 file-based
-      encryption automatically.
+      unlocked keyring, which are typically unavailable. Without a working OS keystore the server cannot
+      encrypt stored secrets, so <strong>it refuses to start</strong> rather than write them unencrypted.
     </p>
-    <p>If you see credential-related errors, set a master key explicitly:</p>
+    <p>Provide a master key so the server can encrypt secrets itself — <strong>required</strong> on headless/SSH hosts:</p>
     <pre><code>export AGENT_RECON_MASTER_KEY=$(openssl rand -hex 32)
 agent-recon start</code></pre>
+    <p>
+      Store the key securely — it decrypts any previously encrypted API keys. Setting
+      <code>AGENT_RECON_ALLOW_PLAINTEXT=1</code> is an unsafe opt-out that starts the server with secrets stored
+      unencrypted; prefer the master key.
+    </p>
     <p>
       Store the key securely &mdash; it is needed to decrypt any previously encrypted API keys.
     </p>

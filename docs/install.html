@@ -246,7 +246,7 @@
       <li>Detect your platform and existing configuration</li>
       <li>Select an installation directory</li>
       <li>Copy hook scripts to your Claude Code hooks directory</li>
-      <li>Register 25 lifecycle events in Claude Code settings</li>
+      <li>Register 24 lifecycle events in Claude Code settings</li>
       <li>Optionally configure LLM API keys for analysis features</li>
       <li>Optionally set up an auto-start service (systemd / launchd / Windows Service)</li>
       <li>Verify the server starts and responds</li>
@@ -287,11 +287,17 @@ agent-recon --version          # Show version</code></pre>
 
     <h2 id="platform-package-managers">Platform Package Managers</h2>
 
-    <h3 id="homebrew">Homebrew (macOS / Linux) &mdash; Coming Soon</h3>
-    <p>A Homebrew formula is planned for a future release. In the meantime, use npm.</p>
+    <p>Prefer your OS package manager over npm? Agent Recon publishes a Homebrew formula and a Scoop manifest on each release (both pull in Node.js automatically).</p>
 
-    <h3 id="scoop">Scoop (Windows) &mdash; Coming Soon</h3>
-    <p>A Scoop manifest is planned for a future release. In the meantime, use npm.</p>
+    <h3 id="homebrew">Homebrew (macOS / Linux)</h3>
+    <pre><code>brew tap genxcoder1999/agent-recon
+brew install agent-recon</code></pre>
+    <p>Then run <code>agent-recon install</code> to register hooks and start the server. The formula depends on <code>node@22</code>, so Homebrew installs Node for you.</p>
+
+    <h3 id="scoop">Scoop (Windows)</h3>
+    <pre><code>scoop bucket add agent-recon https://github.com/genxcoder1999/scoop-agent-recon
+scoop install agent-recon</code></pre>
+    <p>Then run <code>agent-recon install</code>. The manifest depends on <code>nodejs</code>, so Scoop installs Node for you.</p>
 
     <h2 id="tls-https-setup">TLS / HTTPS Setup</h2>
     <p>
@@ -418,7 +424,6 @@ export PATH="$HOME/.npm-global/bin:$PATH"</code></pre>
     <h3 id="windows-specific-issues">Windows-Specific Issues</h3>
     <p>See the <a href="#prerequisites">Prerequisites</a> section for Windows setup requirements. Additional notes:</p>
     <ul>
-      <li><strong>Python opens Microsoft Store:</strong> Disable the Store alias in <strong>Settings &rarr; Apps &rarr; App execution aliases</strong>.</li>
       <li><strong>ExecutionPolicy blocks npm:</strong> <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></li>
       <li><strong>Node.js blocked by firewall:</strong> Allow <code>node.exe</code> in Windows Defender Firewall for private networks.</li>
       <li><strong>PATH not updated:</strong> Restart your terminal after installing prerequisites via winget or installers.</li>
@@ -428,10 +433,17 @@ export PATH="$HOME/.npm-global/bin:$PATH"</code></pre>
     <h3 id="headless-credential-storage">Credential storage on headless Linux / SSH</h3>
     <p>
       On headless servers or SSH sessions, <code>libsecret</code> requires a D-Bus session and unlocked keyring.
-      The server falls back to PBKDF2 file-based encryption automatically. If credential errors persist, set:
+      Without a working OS keystore the server cannot encrypt stored secrets, so <strong>it refuses to start</strong>
+      rather than write them unencrypted. Provide a master key so the server can encrypt secrets itself
+      (<strong>required</strong> on headless/SSH hosts):
     </p>
     <pre><code>export AGENT_RECON_MASTER_KEY=$(openssl rand -hex 32)
 agent-recon start</code></pre>
+    <p>
+      Store the key securely — it decrypts any previously encrypted API keys. Setting
+      <code>AGENT_RECON_ALLOW_PLAINTEXT=1</code> is an unsafe opt-out that starts the server with secrets stored
+      unencrypted; prefer the master key.
+    </p>
   </main>
 
   <!-- Footer -->

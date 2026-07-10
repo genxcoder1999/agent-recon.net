@@ -505,7 +505,7 @@
       <div class="feature-card">
         <span class="icon">&#x1F4B0;</span>
         <h3>Token Cost Tracking</h3>
-        <p>Per-session and cumulative token usage with real-time cost estimates. Supports all Claude, GPT, and Gemini model pricing.</p>
+        <p>Per-session and cumulative token usage with real-time cost estimates, priced per billing mode (API, Bedrock/Vertex, or subscription). Token cost tracking is available for Claude Code.</p>
       </div>
       <div class="feature-card">
         <span class="icon">&#x1F50D;</span>
@@ -600,7 +600,7 @@
     <div class="faq-list">
       <details class="faq-item">
         <summary>Which AI coding agents does Agent Recon&trade; support?</summary>
-        <p>v1 ships with full support for Claude Code. The architecture includes an agent abstraction layer designed for multi-agent support. Cursor, GitHub Copilot, and Windsurf are planned for v1.1.</p>
+        <p>Agent Recon&trade; ships with full support for Claude Code, Cursor, and GitHub Copilot CLI. The installer detects Cursor and Copilot CLI and wires up their hook forwarders automatically. Token and cost tracking is Claude&nbsp;Code-only (Cursor and Copilot CLI do not expose token usage in their hook payloads); every other feature works for all three.</p>
       </details>
       <details class="faq-item">
         <summary>Do I need to provide my own API keys?</summary>
@@ -616,7 +616,7 @@
       </details>
       <details class="faq-item">
         <summary>Can I use Agent Recon with Cursor or other AI agents?</summary>
-        <p>Not yet in v1, but the architecture is designed for it. Cursor, GitHub Copilot, and Windsurf integrations are on the v1.1 roadmap. Each requires only a hook forwarder script and event mapping &mdash; the core dashboard and analysis pipelines are agent-agnostic.</p>
+        <p>Yes &mdash; Cursor and GitHub Copilot CLI are supported alongside Claude Code. When the installer detects <code>~/.cursor/</code> or <code>~/.copilot/</code> it registers a hook forwarder for that tool automatically; re-run <code>agent-recon install</code> if you add one later. The core dashboard, security, and analysis pipelines are agent-agnostic.</p>
       </details>
       <details class="faq-item">
         <summary>How many devices can I activate with one license?</summary>
